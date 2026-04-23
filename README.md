@@ -2,7 +2,7 @@
 
 Official plugin marketplace for [Griddo](https://griddo.io) — the DXP built for higher-education websites.
 
-> Marketplace v1.0.1
+> Marketplace v1.0.2
 
 This marketplace packages tools for developers building on Griddo — both Griddo staff and partner teams. The plugin is open source; issues and contributions are welcome.
 
