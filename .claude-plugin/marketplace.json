@@ -1,0 +1,21 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "Griddo Marketplace",
+  "version": "1.0.0",
+  "description": "Official plugin marketplace for Griddo — DXP tools, scaffolding, and developer experience for higher-education websites",
+  "owner": {
+    "name": "Griddo",
+    "email": "daniel.serrano@griddo.io"
+  },
+  "plugins": [
+    {
+      "name": "griddo-dx",
+      "source": "./plugins/griddo-dx",
+      "description": "Plugin de desarrollo para instancias Griddo — scaffolding de módulos, templates y content types, referencia de fields, hooks, API y schemas",
+      "version": "0.1.0",
+      "author": "Griddo",
+      "category": "development",
+      "tags": ["griddo", "DXP", "higher-education", "modules", "schemas", "react"]
+    }
+  ]
+}
