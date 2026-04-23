@@ -2,6 +2,8 @@
 
 Official plugin marketplace for [Griddo](https://griddo.io) — the DXP built for higher-education websites.
 
+> Marketplace v1.0.1
+
 ## Installation
 
 Add this marketplace to Claude Code:
