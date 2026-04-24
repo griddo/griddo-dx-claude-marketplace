@@ -10,7 +10,8 @@ set -euo pipefail
 
 MARKETPLACE_JSON=".claude-plugin/marketplace.json"
 DRY_RUN=false
-BUMP_TYPE=""
+BUMP_TYPE=""         # Effective global bump type (override or auto-detected from all commits)
+BUMP_TYPE_ARG=""     # User-provided override from CLI (empty when auto-detecting)
 SKIP_SECRET_SCAN=false
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -68,7 +69,7 @@ parse_args() {
       --help) show_help ;;
       --dry-run) DRY_RUN=true; shift ;;
       --skip-secret-scan) SKIP_SECRET_SCAN=true; shift ;;
-      major|minor|patch) BUMP_TYPE="$1"; shift ;;
+      major|minor|patch) BUMP_TYPE_ARG="$1"; BUMP_TYPE="$1"; shift ;;
       *) emit_error "Invalid argument: $1. Use --help for usage." ;;
     esac
   done
@@ -180,7 +181,11 @@ detect_changes() {
 }
 
 determine_bump() {
-  if [[ -n "$BUMP_TYPE" ]]; then
+  # Sets BUMP_TYPE to the effective *global* bump (user override or auto-detect
+  # across ALL commits). Used only for the top-level JSON field; per-component
+  # bumps are computed separately by compute_bump_for().
+  if [[ -n "$BUMP_TYPE_ARG" ]]; then
+    BUMP_TYPE="$BUMP_TYPE_ARG"
     log "Bump type (from arg): $BUMP_TYPE"
     return
   fi
@@ -196,7 +201,37 @@ determine_bump() {
     BUMP_TYPE="patch"
   fi
 
-  log "Bump type (auto-detected): $BUMP_TYPE"
+  log "Bump type (auto-detected, global): $BUMP_TYPE"
+}
+
+# Derive a bump type from commits filtered by pathspec. A CLI override wins
+# unconditionally so that `/release patch` still forces uniform bumping.
+compute_bump_for() {
+  if [[ -n "$BUMP_TYPE_ARG" ]]; then
+    echo "$BUMP_TYPE_ARG"
+    return
+  fi
+
+  local commits
+  commits=$(git log "$BASELINE"..HEAD --oneline -- "$@" 2>/dev/null || true)
+
+  if echo "$commits" | grep -qE '(BREAKING CHANGE|!\s*:)'; then
+    echo "major"
+  elif echo "$commits" | grep -qE '^[a-f0-9]+ feat'; then
+    echo "minor"
+  else
+    echo "patch"
+  fi
+}
+
+# Build a pathspec matching everything NOT under any plugin directory.
+# Result lands in MARKETPLACE_PATHSPEC array for use with compute_bump_for.
+build_marketplace_pathspec() {
+  MARKETPLACE_PATHSPEC=(".")
+  while read -r p; do
+    [[ -z "$p" ]] && continue
+    MARKETPLACE_PATHSPEC+=(":(exclude)${p}/")
+  done < <(jq -r '.plugins[] | .source | ltrimstr("./")' "$MARKETPLACE_JSON" 2>/dev/null)
 }
 
 calc_version() {
@@ -224,10 +259,12 @@ bump_plugins() {
     local plugin_json_file="$path/.claude-plugin/plugin.json"
     local old_ver
     old_ver=$(jq -r '.version' "$plugin_json_file")
+    local plugin_bump
+    plugin_bump=$(compute_bump_for "${path}/")
     local new_ver
-    new_ver=$(calc_version "$old_ver" "$BUMP_TYPE")
+    new_ver=$(calc_version "$old_ver" "$plugin_bump")
 
-    log "  $name ($path): $old_ver → $new_ver"
+    log "  $name ($path): $old_ver → $new_ver ($plugin_bump)"
 
     if [[ "$DRY_RUN" == "false" ]]; then
       # Update plugin.json
@@ -248,7 +285,8 @@ bump_plugins() {
       --arg old "$old_ver" \
       --arg new "$new_ver" \
       --arg file "$plugin_json_file" \
-      '. + [{"name": $name, "path": $path, "old_version": $old, "new_version": $new, "file": $file}]')
+      --arg bump "$plugin_bump" \
+      '. + [{"name": $name, "path": $path, "old_version": $old, "new_version": $new, "file": $file, "bump_type": $bump}]')
 
   done <<< "$CHANGED_PLUGINS"
 }
@@ -257,6 +295,7 @@ bump_marketplace() {
   MKT_CHANGED_JSON="false"
   MKT_OLD_VERSION=""
   MKT_NEW_VERSION=""
+  MKT_BUMP_TYPE=""
 
   if [[ "$MARKETPLACE_CHANGED" == "false" ]]; then
     return
@@ -264,9 +303,11 @@ bump_marketplace() {
 
   MKT_CHANGED_JSON="true"
   MKT_OLD_VERSION=$(jq -r '.version' "$MARKETPLACE_JSON")
-  MKT_NEW_VERSION=$(calc_version "$MKT_OLD_VERSION" "$BUMP_TYPE")
+  build_marketplace_pathspec
+  MKT_BUMP_TYPE=$(compute_bump_for "${MARKETPLACE_PATHSPEC[@]}")
+  MKT_NEW_VERSION=$(calc_version "$MKT_OLD_VERSION" "$MKT_BUMP_TYPE")
 
-  log "  marketplace: $MKT_OLD_VERSION → $MKT_NEW_VERSION"
+  log "  marketplace: $MKT_OLD_VERSION → $MKT_NEW_VERSION ($MKT_BUMP_TYPE)"
 
   if [[ "$DRY_RUN" == "false" ]]; then
     jq --arg v "$MKT_NEW_VERSION" '.version = $v' "$MARKETPLACE_JSON" > "$TMPFILE" && mv "$TMPFILE" "$MARKETPLACE_JSON"
@@ -357,6 +398,7 @@ emit_output() {
     --argjson mkt_changed "$MKT_CHANGED_JSON" \
     --arg mkt_old "${MKT_OLD_VERSION:-}" \
     --arg mkt_new "${MKT_NEW_VERSION:-}" \
+    --arg mkt_bump "${MKT_BUMP_TYPE:-}" \
     --argjson files_modified "$FILES_MODIFIED_JSON" \
     --arg commit_message "$COMMIT_MESSAGE" \
     --argjson commits "$commits_json" \
@@ -370,7 +412,8 @@ emit_output() {
       marketplace: {
         changed: $mkt_changed,
         old_version: $mkt_old,
-        new_version: $mkt_new
+        new_version: $mkt_new,
+        bump_type: $mkt_bump
       },
       files_modified: $files_modified,
       commit_message: $commit_message,
