@@ -1,9 +1,16 @@
 {
   "name": "griddo-dx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Plugin de desarrollo para instancias Griddo — scaffolding de módulos, templates y content types, referencia de fields, hooks, API y schemas",
   "author": {
     "name": "Griddo"
   },
-  "keywords": ["griddo", "DXP", "development", "modules", "schemas", "react"]
+  "keywords": [
+    "griddo",
+    "DXP",
+    "development",
+    "modules",
+    "schemas",
+    "react"
+  ]
 }

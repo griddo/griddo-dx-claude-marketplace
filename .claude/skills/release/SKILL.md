@@ -12,6 +12,7 @@ Supports both flat (`PLUGIN_NAME/`) and nested (`plugins/PLUGIN_NAME/`) plugin l
 ## Available scripts
 
 - **`scripts/release.sh`** — Validates branch, detects changes, bumps versions in JSON files, outputs structured JSON. Run with `--help` for details.
+- **`scripts/scan-secrets.sh`** — Scans tracked files for likely exposed credentials. Invoked by `release.sh` as a pre-release gate; can also be run standalone. Run with `--help` for details.
 
 ## Usage
 
@@ -34,7 +35,7 @@ bash .claude/skills/release/scripts/release.sh $ARGUMENTS
 ```
 
 Parse the JSON output. Handle by `status` field:
-- `"error"`: Print the `error` message and STOP.
+- `"error"`: Print the `error` message and STOP. If the payload includes a `findings` array (credential scan), list each finding (`file:line [pattern] match_preview`) and tell the user to redact the values with `[REDACTED]` before re-running, or to pass `--skip-secret-scan` if the matches are confirmed false positives.
 - `"no_changes"`: Print the `message` and STOP.
 - `"ok"`: Save all fields and continue.
 

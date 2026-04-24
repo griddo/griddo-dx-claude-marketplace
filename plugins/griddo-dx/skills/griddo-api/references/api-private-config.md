@@ -493,7 +493,7 @@ export localEnv=1
 
 #admin user
 export adminUserEmail="admin@example.com"
-export adminUserPassword="6pmqFF1hHz-X"
+export adminUserPassword="[REDACTED]"
 
 #bot - comentado para que no se sobreescriba
 export botEmail="user@example.comio"

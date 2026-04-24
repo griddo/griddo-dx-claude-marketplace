@@ -1985,7 +1985,7 @@ Para que funcione correctamente la implementación del SSO son necesarias las si
 export SSO_ACTIVATED=1
 export SSO_REDIRECT_URL='http://localhost:3000/login_griddo'
 export SSO_CLIENT_ID='8399cb49-fd15-48ba-a30b-40dd331d91fe'
-export SSO_CLIENT_SECRET='6xsNK5gnxmQW-IBJIiGneWvWWRvgH7bdFXufP24h'
+export SSO_CLIENT_SECRET='[REDACTED]'
 export SSO_OPENID_URL='your-instance.griddo.es/adfs/.well-known/openid-configuration'
 export SSO_USERINFO_URL='your-instance.griddo.es/adfs/userinfo'
 ```javascript

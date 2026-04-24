@@ -11,6 +11,8 @@ set -euo pipefail
 MARKETPLACE_JSON=".claude-plugin/marketplace.json"
 DRY_RUN=false
 BUMP_TYPE=""
+SKIP_SECRET_SCAN=false
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Temp file with cleanup trap
 TMPFILE=$(mktemp)
@@ -42,8 +44,9 @@ Detect changed plugins and marketplace changes, bump versions,
 and output structured JSON for the /release skill.
 
 Options:
-  --help       Show this help message
-  --dry-run    Calculate versions without modifying files
+  --help               Show this help message
+  --dry-run            Calculate versions without modifying files
+  --skip-secret-scan   Bypass the credential leak scan (use with caution)
 
 Bump type:
   major        Increment major version (X.0.0)
@@ -64,6 +67,7 @@ parse_args() {
     case "$1" in
       --help) show_help ;;
       --dry-run) DRY_RUN=true; shift ;;
+      --skip-secret-scan) SKIP_SECRET_SCAN=true; shift ;;
       major|minor|patch) BUMP_TYPE="$1"; shift ;;
       *) emit_error "Invalid argument: $1. Use --help for usage." ;;
     esac
@@ -82,6 +86,41 @@ check_clean() {
   if [[ -n "$(git status --porcelain)" ]]; then
     emit_error "Uncommitted changes detected. Commit or stash them first."
   fi
+}
+
+scan_secrets() {
+  if [[ "$SKIP_SECRET_SCAN" == "true" ]]; then
+    log "Secret scan skipped (--skip-secret-scan)."
+    return
+  fi
+
+  local scanner="$SCRIPT_DIR/scan-secrets.sh"
+  if [[ ! -x "$scanner" ]]; then
+    log "Secret scanner not found or not executable at $scanner — skipping."
+    return
+  fi
+
+  log "Scanning for exposed credentials..."
+  local findings scan_exit=0
+  findings=$("$scanner" --json) || scan_exit=$?
+
+  if [[ "$scan_exit" -eq 0 ]]; then
+    log "Secret scan: clean."
+    return
+  fi
+
+  if [[ "$scan_exit" -ne 1 ]]; then
+    emit_error "Secret scanner failed with exit code $scan_exit."
+  fi
+
+  # Findings detected — block the release.
+  jq -n --argjson findings "$findings" \
+    '{
+      status: "error",
+      error: "Potential credential leaks detected. Redact the values (use [REDACTED]) before releasing, or re-run with --skip-secret-scan if these are confirmed false positives.",
+      findings: $findings
+    }'
+  exit 1
 }
 
 find_baseline() {
@@ -348,6 +387,7 @@ main() {
   log "=== Release Script ==="
   validate_branch
   check_clean
+  scan_secrets
   find_baseline
 
   log "Detecting changes..."
