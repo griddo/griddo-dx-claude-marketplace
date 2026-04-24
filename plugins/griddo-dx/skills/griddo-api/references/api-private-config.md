@@ -520,14 +520,14 @@ export sqlServer="staginggriddo-v2-apiserverstack-af-auroradbcluster-0ov5rtffp0g
 export sqlPWD="[REDACTED]"
 
 #hubspot
-export hubspotKey="e6a4549a-63da-4a57-907b-77ab76536639"
+export hubspotKey="[REDACTED]"
 export userIdGenerator="md5"
 
 #mailservice
 export mailhost="smtp.gmail.com"
 export mailport="587"
 export mailuser="eldemo"
-export mailpass="crethmcxqszvzevv"
+export mailpass="[REDACTED]"
 
 #jwt
 export jwtKey="[REDACTED]"
