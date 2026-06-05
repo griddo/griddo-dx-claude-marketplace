@@ -1903,7 +1903,7 @@ export NODE_OPTIONS=""
 
 #admin user
 export adminUserEmail="admin@example.com"
-export adminUserPassword="L3z^6!4656Lr"
+export adminUserPassword="[REDACTED]"
 
 # #bot - comentado para que no se sobreescriba
 # export botEmail="user@example.com"
@@ -1944,8 +1944,8 @@ export DAM_KEY="[REDACTED]"
 
 # #cloudinary ---> ESTO TIENE QUE DESAPARECER CUANDO NOS QUITEMOS CLOUDINARY
 # export CLOUDINARY_NAME=thesaurus-cms
-# export CLOUDINARY_KEY=886534817922424
-# export CLOUDINARY_SECRET=ITv4QncjKA0gwYS3O5b6nDVbHi4
+# export CLOUDINARY_KEY=[REDACTED]
+# export CLOUDINARY_SECRET=[REDACTED]
 # export CLOUDINARY_FOLDER=thesaurus-dev
 
 #bbdd
