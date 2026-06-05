@@ -418,7 +418,7 @@ export NODE_OPTIONS=""
 
 #admin user
 export adminUserEmail="admin@example.com"
-export adminUserPassword="L3z^6!4656Lr"
+export adminUserPassword="[REDACTED]"
 
 #bot - comentado para que no se sobreescriba
 export botEmail="user@example.comio"
