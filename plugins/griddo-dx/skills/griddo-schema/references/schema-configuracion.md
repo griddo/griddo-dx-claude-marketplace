@@ -124,7 +124,7 @@ Este *schema* representa los *fields* extras que queramos que aparecerán por ca
 
 ## Exportar los nuevos schemas.
 
-Debemos exportar el nuevo schema en el archivo `griddo.config.js|ts` que está en la raíz de del proyecto como `menu-items` dentro del objeto `schemas` como se muestra a continuación.
+Debemos exportar el nuevo schema en el archivo `griddo.config.ts` que está en la raíz de del proyecto como `menu-items` dentro del objeto `schemas` como se muestra a continuación.
 
 ```jsx
 // .........
@@ -173,7 +173,7 @@ Griddo proporciona varios types con los que trabajar en los menús. Esto es úti
 **Ejemplo**
 
 ```tsx
-import { LinkMenuElement, GroupMenuElement } from "@autoTypes";
+import { LinkMenuElement, GroupMenuElement } from "@/autotypes";
 
 const Header = (props: HeaderProps) => {
 	const { menu } = props;
@@ -303,7 +303,7 @@ export default schema;
 
 ## Exportar los nuevos schemas.
 
-Debemos exportar el nuevo schema en el archivo `griddo.config.js|ts` que está en la raíz de del proyecto como `socials` dentro del objeto `schemas` como se muestra a continuación.
+Debemos exportar el nuevo schema en el archivo `griddo.config.ts` que está en la raíz de del proyecto como `socials` dentro del objeto `schemas` como se muestra a continuación.
 
 ```jsx
 // .........

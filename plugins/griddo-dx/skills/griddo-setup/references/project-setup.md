@@ -263,12 +263,12 @@ Punto principal de render donde se exporta el `<SiteProvider>` de Griddo con tod
 
 ### Editor
 
-El editor de Griddo se lanza con `griddo start`. Normalmente lo añadiremos al `package.json`:
+El editor de Griddo se lanza con `griddo start`. El Starter ya lo trae como script `editor` (`yarn editor`):
 
 ```json
 {
 	"scripts": {
-		"start:editor": "npx env-cmd -f .env griddo start"
+		"editor": "node --env-file=.env node_modules/.bin/griddo start"
 	}
 }
 ```
@@ -281,7 +281,7 @@ O directamente desde terminal:
 
 ### Renders en local
 
-Los renders son procesos que incluyen preparación, comienzo, generación de estáticos, subida, información de fin de render, etc. Para renders locales, usa el CLI que ofrece el paquete `@griddo/cx`:
+Los renders son procesos que incluyen preparación, comienzo, generación de estáticos, subida, información de fin de render, etc. Para renders locales, usa el CLI `griddo-render` que ofrece el paquete `@griddo/render`:
 
 ```bash
 # ayuda
@@ -295,15 +295,14 @@ O desde `package.json`:
 
 ```json
 {
-	"render": "env-cmd griddo-render render --root=.",
-	"render": "node --env-file=.env ./node_modules/.bin/griddo-render render --root=."
+	"render": "node --env-file=.env node_modules/.bin/griddo-render render --root=."
 }
 ```
 
 ### Sincronizar schemas
 
 ```bash
-npm run sync-schemas
+yarn sync-schemas
 ```
 
 Actualiza los schemas en la API.
@@ -311,7 +310,7 @@ Actualiza los schemas en la API.
 ### AutoTypes
 
 ```bash
-npm run autotypes
+yarn autotypes
 ```
 
 Genera Types de TypeScript automáticamente desde tus schemas en `autotypes.d.ts`

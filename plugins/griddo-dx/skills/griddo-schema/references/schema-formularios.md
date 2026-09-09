@@ -28,7 +28,7 @@ Schemas para los componentes de formularios que estarán disponibles en un `Form
 ## Ejemplo
 
 ```tsx
-import { EmailFieldProps } from "@autoTypes";
+import { EmailFieldProps } from "@/autotypes";
 import { Schema } from "@griddo/core";
 
 const schema: Schema.FormField<EmailFieldProps> = {

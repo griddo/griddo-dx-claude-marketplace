@@ -188,7 +188,8 @@ export default schema;
 
 ```tsx
 import type { NewsDetailProps } from "@/autotypes";
-import { GriddoImageExp, GriddoModule } from "@griddo/core";
+import { GriddoImageExp } from "@griddo/core";
+import { GriddoModule } from "@ui/modules";
 
 function NewsDetail(props: NewsDetailProps) {
   const { title, image, body, relatedSection } = props;

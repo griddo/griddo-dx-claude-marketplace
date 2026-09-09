@@ -5,7 +5,7 @@ Define la estructura de datos del componente para visualizar los campos de entra
 Ejemplo de un schema para un componente `Image` 
 
 ```tsx
-import { ImageProps } from "@autoTypes"
+import { ImageProps } from "@/autotypes"
 import { Schema } from "@griddo/core"
 
 const schema: Schema.Component<ImageProps> = {
@@ -89,7 +89,7 @@ Dependiendo del tipo de Field utilizado, puede que en `default` nos requiera est
 </aside>
 
 ```tsx
-import { ImageProps } from "@autoTypes"
+import { ImageProps } from "@/autotypes"
 import { Schema } from "@griddo/core"
 
 const schema: Schema.Component<ImageProps> = {

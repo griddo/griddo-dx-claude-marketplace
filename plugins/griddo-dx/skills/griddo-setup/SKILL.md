@@ -56,7 +56,7 @@ Cuando muestres código:
 ### 5. Recordar contextos de ejecución
 
 Explica cuándo se usan ciertos servicios:
-- `yarn start:editor` → Para trabajar en el editor visual
+- `yarn editor` → Para trabajar en el editor visual
 - `yarn render` → Para generar páginas estáticas en local
 - `yarn sync-schemas` → Para sincronizar schemas con la API
 - `yarn autotypes` → Para generar types de TypeScript automáticamente

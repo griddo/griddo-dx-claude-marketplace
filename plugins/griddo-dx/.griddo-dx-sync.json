@@ -1,0 +1,35 @@
+{
+  "tool": "scripts/dx-docs-sync/sync.mjs",
+  "monorepo": {
+    "version": "12.8.4",
+    "sha": "80b4a35a50"
+  },
+  "syncedAt": "2026-09-09",
+  "files": {
+    "skills/griddo-core/references/api-publica.md": {
+      "source": "packages/griddo-core/llms-doc/api-publica.md",
+      "sha256": "01b9d945659289e98db1bff073e33c8aa0651e5e82fa29f13ac6fabb24733846",
+      "sourceSha256": "5259a5fafdccba11b71ebebdc9d1428eea494237862d104079b1fb7dfec7282a"
+    },
+    "skills/griddo-core/references/autotypes.md": {
+      "source": "packages/griddo-core/llms-doc/autotypes.md",
+      "sha256": "0323a55fbcd5a016e3b23a843ff4ccae4a98834aa309264273956acd7896db3d",
+      "sourceSha256": "8aa85ce2e2459534a58b4d52c0e145109464fb558cbeb47ee2a39a027f508fbb"
+    },
+    "skills/griddo-core/references/configuracion.md": {
+      "source": "packages/griddo-core/llms-doc/configuracion.md",
+      "sha256": "bf69f2594531ecff42c1c5f5a5d136895742907d427227bbefa520022e9ab610",
+      "sourceSha256": "a89c824035f0f7698d903c2a9bbad7366cc52ee76736212f7e6d177dd1b174f3"
+    },
+    "skills/griddo-core/references/flujo.md": {
+      "source": "packages/griddo-core/llms-doc/flujo.md",
+      "sha256": "9f0e0308d808a4f4fe513adaa6b13174295ab3a4a594b845a3c976e64e008d10",
+      "sourceSha256": "068d16cdeda34997c8038a5a2628eb31f85555098b563743035047465c43e627"
+    },
+    "skills/griddo-core/references/tipos-y-schemas.md": {
+      "source": "packages/griddo-core/llms-doc/tipos-y-schemas.md",
+      "sha256": "6107f86e1a1dded5a0074a10244a720d2b80dfe22951626e27d620cf32a420b0",
+      "sourceSha256": "13d3a817646ae8154ca3caa6c66b83ead02c09a6eb0e5939d9eb9b51a821f9c1"
+    }
+  }
+}
