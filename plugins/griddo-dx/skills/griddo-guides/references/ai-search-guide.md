@@ -45,7 +45,7 @@ Todas las búsquedas basadas en IA tienen como base los embeddings. Los embeddin
 ## Los endpoints
 
 - **Si vas a desarrollar para una instancia:**
-La implementación debe hacerse a través de la **API Pública**. Siempre. En la documentación de API Pública está explicado la manera de implementar tanto las búsquedas estructuradas como las conversacionales. Y tienes una demo en vanilla javascript justo en el apartado siguiente de esta página.
+La implementación debe hacerse a través de la **API Pública**. Siempre. Desde la instancia, la forma recomendada es usar los hooks `useAiSearch` (búsquedas estructuradas) y `useAiAnswers` (conversacionales) de `@griddo/core` (ver la skill `griddo-hooks`); este plugin no documenta los endpoints. Tienes además una demo en vanilla javascript en el apartado siguiente de esta página.
 - **Si estás desarrollando para Griddo producto:**
 Los endpoints de API Pública tienen su meollo en la **API Privada**, donde también sucede el tema de la generación de embeddings. Pero la parte de API Privada está más reservada para su uso por parte de desarrolladores de Griddo. La API Privada, aparte de gestionar toda la parte relacionada con las propias búsquedas, también gestiona la parte de los embeddings pregenerados de las páginas.
 

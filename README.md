@@ -35,7 +35,7 @@ Pull the latest marketplace metadata and reinstall to pick up new plugin version
 
 | Plugin | Description | Version |
 |--------|-------------|---------|
-| **griddo-dx** | Scaffolding de módulos, templates y content types, referencia de fields, hooks, API y schemas | 0.2.1 |
+| **griddo-dx** | Scaffolding de módulos, templates y content types, referencia de fields, hooks, schemas y el contrato de @griddo/core | 0.2.1 |
 
 ## Contributing
 

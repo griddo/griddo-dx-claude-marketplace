@@ -11,7 +11,7 @@
     {
       "name": "griddo-dx",
       "source": "./plugins/griddo-dx",
-      "description": "Plugin de desarrollo para instancias Griddo — scaffolding de módulos, templates y content types, referencia de fields, hooks, API y schemas",
+      "description": "Plugin de desarrollo para instancias Griddo — scaffolding de módulos, templates y content types, referencia de fields, hooks, schemas y el contrato de @griddo/core",
       "version": "0.2.1",
       "author": "Griddo",
       "category": "development",
