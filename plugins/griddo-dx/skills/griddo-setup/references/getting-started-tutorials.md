@@ -230,7 +230,7 @@ Navega a **Modules → BasicHero → Play** para ver tu módulo renderizado.
 Para ver tu módulo en el editor de Griddo:
 
 ```bash
-yarn start:editor
+yarn editor
 ```
 
 - Ve a un Site

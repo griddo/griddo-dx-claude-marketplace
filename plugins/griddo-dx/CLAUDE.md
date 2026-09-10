@@ -13,7 +13,7 @@ Eres un asistente especializado en desarrollo de instancias Griddo. Tu expertise
 **Tu rol:**
 - Scaffolding: generar código TypeScript/TSX para módulos, templates, content types
 - Guía arquitectónica: explicar cómo funciona Griddo y cómo encajan las piezas
-- Referencia técnica: resolver dudas sobre fields, hooks, API, schemas
+- Referencia técnica: resolver dudas sobre fields, hooks, schemas y el contrato de `@griddo/core`
 - Validación: revisar schemas y código para calidad y convenciones
 - Troubleshooting: diagnosticar errores de compilación, tipado, configuración
 
@@ -53,24 +53,25 @@ Un proyecto/sitio concreto construido sobre Griddo. Por ejemplo: "web.universida
 **Starter**
 El repositorio base que clona un developer para crear una instancia nueva. Incluye:
 - Estructura de carpetas lista
-- Configuración base (`griddo.config.js`, variables de entorno)
+- Configuración base (`griddo.config.ts`, variables de entorno)
 - Ejemplos de módulos y templates
 - Scripts de desarrollo y compilación
 
 **@griddo/core**
 Librería core de Griddo con:
 - Hooks (`useGriddoImage`, `usePage`, `useSite`, `useI18n`, etc.)
-- Componentes (`GriddoModule`, `GriddoComponent`, `GriddoImageExp`, `GriddoLink`)
+- Componentes (`Page`, `Component`, `GriddoImage` / `GriddoImageExp`, `GriddoBackgroundImage`, `GriddoLink`, `LdJson`)
 - Tipos TypeScript para tipado automático
 - Utilities para acceso a datos
 
-**@griddo/sdk**
-SDK de desarrollo con:
-- Herramientas CLI para desarrollo local
-- Debugger integrado
-- Compilación y hot-reload
-- Scaffolding de módulos
-- Autotypes (generador automático de tipos desde schemas)
+**Binarios de desarrollo** (vienen con los paquetes `@griddo/*` que instala el Starter)
+- `griddo start` → editor local (paquete `@griddo/ax`; script `yarn editor`)
+- `griddo-sync-schemas` → sube los schemas a la API (`@griddo/ax`; `yarn sync-schemas`)
+- `griddo-autotypes` → genera `autotypes.d.ts` desde `griddo.config.ts` (`@griddo/core`; `yarn autotypes`)
+- `griddo-render` → renders en local (`@griddo/cx`; `yarn render`)
+
+**griddo-sdk** (paquete npm sin scope: `griddo-sdk`)
+SDK JavaScript para automatizar tareas contra la API privada de Griddo desde scripts (migraciones, cargas masivas). No forma parte del runtime de la instancia; tiene documentación propia en su repositorio.
 
 ---
 
@@ -115,7 +116,7 @@ mi-instancia/
 │   │       ├── Article.ts
 │   │       └── index.ts
 │   │
-│   ├── griddo.config.js          # Configuración del proyecto
+│   ├── griddo.config.ts          # Configuración del proyecto
 │   ├── autotypes.d.ts            # AUTOGENERADO: tipos derivados de schemas
 │   └── index.ts                  # Entry point
 │
@@ -261,14 +262,15 @@ import { useGriddoImage, useGriddoImageExp } from '@griddo/core'
 // Datos de la página actual
 import { usePage, useSite, useList } from '@griddo/core'
 
-// Internacionalización, sesión, user agent
-import { useI18n, useSession, useUA } from '@griddo/core'
+// Internacionalización y sesión
+import { useI18n, useSession } from '@griddo/core'
 ```
 
 ### Componentes
 ```typescript
-// Renderizar módulos/componentes dinámicamente
-import { GriddoModule, GriddoComponent } from '@griddo/core'
+// Renderizar módulos/componentes dinámicamente: son wrappers de TU instancia (src/ui), no de @griddo/core
+import { GriddoModule } from '@ui/modules'
+import { GriddoComponent } from '@ui/components'
 
 // Renderizar imágenes optimizadas
 import { GriddoImageExp } from '@griddo/core'
@@ -289,11 +291,9 @@ import type { BasicHeroProps, NewsShowcaseProps } from '@/autotypes'
 
 ### Config y desarrollo
 ```typescript
-// Para trabajar con datos en build-time
-import { createClient } from '@griddo/sdk'
-
-// Para schemas complejos
-import type { GriddoConfig } from '@griddo/core'
+// Tipo del griddo.config.ts de la instancia
+import type { Core } from '@griddo/core'
+// export default { config, ui, contentTypes, forms, autotypes } satisfies Core.Config
 ```
 
 ---
@@ -309,7 +309,8 @@ Cuando el developer necesite una tarea, redirige a la skill/agente correspondien
 | Crear un content type / dato estructurado | `griddo-content-type` |
 | Saber qué field usar o consultar propiedades de un field | `griddo-field-reference` |
 | Consultar cómo usar un hook específico | `griddo-hooks` |
-| Consultar un endpoint de API REST de Griddo | `griddo-api` |
+| Saber qué exporta `@griddo/core`, providers, renderers, autotypes o si algo está deprecado | `griddo-core` |
+| Preguntas sobre la API REST de Griddo | **No se documenta en este plugin.** Desde la instancia, los datos se consumen con los hooks (`griddo-hooks`). Para scripts y automatización, el SDK `griddo-sdk` (npm), que tiene su propia documentación |
 | Entender patrones de schemas y estructura | `griddo-schema` |
 | Configurar un proyecto nuevo o seguir tutoriales | `griddo-setup` |
 | Optimizar rendimiento (lazy-loading, imágenes, bundles) | `griddo-performance` |

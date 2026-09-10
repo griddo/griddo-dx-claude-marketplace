@@ -253,7 +253,8 @@ export default schema;
 
 ```tsx
 import type { NewsDetailFullProps } from "@/autotypes";
-import { GriddoImageExp, GriddoModule } from "@griddo/core";
+import { GriddoImageExp } from "@griddo/core";
+import { GriddoModule } from "@ui/modules";
 
 function NewsDetailFull(props: NewsDetailFullProps) {
   const { title, image, body, relatedSection } = props;
@@ -347,7 +348,8 @@ export default schema;
 
 ```tsx
 import type { NewsMultiPageProps } from "@/autotypes";
-import { GriddoImageExp, GriddoModule } from "@griddo/core";
+import { GriddoImageExp } from "@griddo/core";
+import { GriddoModule } from "@ui/modules";
 
 function NewsMultiPage(props: NewsMultiPageProps) {
   const { title, image, contentSections } = props;

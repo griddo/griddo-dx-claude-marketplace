@@ -1,13 +1,13 @@
 # Griddo DX Plugin
 
-Plugin especializado en desarrollo de instancias Griddo — scaffolding de módulos, templates, content types, referencia completa de fields, hooks, API y schemas.
+Plugin especializado en desarrollo de instancias Griddo — scaffolding de módulos, templates, content types, referencia completa de fields, hooks, schemas y el contrato de @griddo/core.
 
 ## ¿Qué hace este plugin?
 
 El plugin Griddo DX te acompaña en cada etapa del desarrollo de una instancia Griddo:
 
 - **Scaffolding**: genera código TypeScript/TSX listo para usar (módulos, templates, content types)
-- **Referencia técnica**: consulta fields, hooks, API endpoints, patrones de schemas
+- **Referencia técnica**: consulta fields, hooks, patrones de schemas y qué exporta `@griddo/core`
 - **Validación**: revisa que tus schemas cumplan convenciones y mejores prácticas
 - **Guías**: tutoriales sobre configuración, performance, integraciones (SSO, SEO, AI Search, etc.)
 - **Debugging**: ayuda a resolver errores de tipado, compilación, configuración
@@ -21,7 +21,7 @@ El plugin Griddo DX te acompaña en cada etapa del desarrollo de una instancia G
 | `griddo-content-type` | Define tipos de contenido y datos estructurados (JSON-LD, etc.) | Crear content type, microdatos |
 | `griddo-field-reference` | Referencia de todos los field types y sus propiedades | ¿Qué field usar? Propiedades de un field |
 | `griddo-hooks` | Referencia de hooks de @griddo/core | Cómo usar useGriddoImage, usePage, etc. |
-| `griddo-api` | Endpoints REST de la API Griddo | Consultar endpoints, ejemplos |
+| `griddo-core` | Contrato de `@griddo/core`: exports, providers, renderers, autotypes (generado desde el monorepo de Griddo) | Qué exporta core, un import que falla, deprecaciones |
 | `griddo-schema` | Patrones avanzados de schemas | Validación, estructura, ComponentArray, etc. |
 | `griddo-setup` | Configuración de proyectos nuevos, tutoriales | Clonar starter, .env, yarn scripts |
 | `griddo-performance` | Optimización de rendimiento | Lazy-loading, code-splitting, imágenes |
