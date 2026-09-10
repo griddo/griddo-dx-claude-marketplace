@@ -1,7 +1,7 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/flujo.md
-monorepo: v12.8.4 @ 8145d53a63
+monorepo: v12.8.4 @ 5cd13c2665
 fecha:    2026-09-10
 -->
 
@@ -13,7 +13,7 @@ fecha:    2026-09-10
 - En runtime hay **6 renderers** posibles (`gatsby`, `editor`, `preview`, `forms`, `ssg`, `sharedPage`), cada uno con un comportamiento ligeramente distinto en `<Component>` y en algunos hooks. El renderer activo se inyecta vía `<SiteProvider renderer="...">`.
 - `<Page>` es el entrypoint de render por página. Internamente compone `<PageProvider>` + `<Component>` + `<NavigationProvider>` para header/footer + `<Template>` para el cuerpo.
 - El binario `griddo-autotypes` no arranca un proceso largo: lee config, parsea schemas, escribe el `.d.ts` y termina. Se ejecuta en `prebuild` o equivalente.
-- El paquete **no hace I/O en runtime**. Los hooks que fetchean (`useFetch`, `useReferenceFieldData`, `useList`, `useDataFilters`) usan `fetch` del navegador contra `apiUrl`/`publicApiUrl` que vienen del Provider tree.
+- El paquete **no hace I/O en runtime**. Los hooks que fetchean (`useList`, `useDataFilters`, `useReferenceFieldData`, y `useFetch` por debajo de ellos: es interno, no se exporta en `src/index.ts`) usan `fetch` del navegador contra `apiUrl`/`publicApiUrl` que vienen del Provider tree.
 
 ## Actores
 
@@ -56,7 +56,7 @@ Un `autotypes.d.ts` con un default export `__AT__` que contiene tipos como `__AT
 ### Si falla
 
 - Error en `loadConfigTs` → exit 1, log con stack.
-- Error en cualquier parser → log con `${kleur.red(" ✘")} AutoTypes` y el `e`. **No exit 1** — el script atrapa y solo loguea, así un parser roto no aborta el build entero. Esto es discutible (ver `reglas.md` (doc interna de @griddo/core, no incluida en el plugin)).
+- Error en cualquier parser → log con `${kleur.red(" ✘")} AutoTypes` y el `e`. **No exit 1** — el script atrapa y solo loguea, así un parser roto no aborta el build entero. Esto es discutible (ver `reglas.md`).
 
 ## Fase 2 — Provider tree de la instancia
 
@@ -115,7 +115,7 @@ Los hooks que llaman a la API:
 
 | Hook | Endpoint | Cuándo dispara |
 |---|---|---|
-| `useFetch(url)` | el que recibas | cuando `url` cambia. Wrapper genérico. |
+| `useFetch(url)` — **interno**, no está en `src/index.ts` | el que recibas | cuando `url` cambia. Wrapper genérico; lo usan por debajo `useList` y `useDataFilters`. |
 | `useList<T>()` | `${publicApiUrl}/list/v2/...` o `/list/fixed/` o `/list/navigations/` | al llamar el `setQuery` retornado, evalúa el query firmado y llama `useFetch`. Cachea `prevQueryRef` para evitar refetches por el cache-buster. |
 | `useDataFilters<T>()` | `${publicApiUrl}/filters/<contentType>/...` | igual al anterior. |
 | `useReferenceFieldData<T>(data)` | `${apiUrl}/site/<id>/distributor` (privada) | **solo en renderers `editor` y `sharedPage`**. En `gatsby`/`ssg` los datos vienen pre-renderizados. |
@@ -166,4 +166,4 @@ yarn build
 - [Autotypes](autotypes.md) — internals del CLI.
 - [Tipos y schemas](tipos-y-schemas.md) — cómo se relacionan los tipos con el config.
 - Arquitectura (doc interna de @griddo/core, no incluida en el plugin) — layers internos.
-- Reglas (doc interna de @griddo/core, no incluida en el plugin) — qué NO hacer al consumir o extender.
+- Reglas — qué NO hacer al consumir o extender.

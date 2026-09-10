@@ -1,7 +1,7 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/superficie-publica.md
-monorepo: v12.8.4 @ 8145d53a63
+monorepo: v12.8.4 @ 5cd13c2665
 fecha:    2026-09-10
 -->
 
@@ -11,7 +11,7 @@ fecha:    2026-09-10
 
 - El barrel `src/index.ts` re-exporta **todo** lo público. Si algo no está ahí, no es API estable y los consumidores no deben importarlo por path interno.
 - Componentes principales: `<Page>`, `<Component>`, `<GriddoLink>`, `<GriddoImage>`, `<GriddoImageExp>`, `<GriddoBackgroundImage>`, `<CloudinaryImage>` (deprecated), `<CloudinaryBackgroundImage>` (deprecated), `<LdJson>`, `<ModulePreview>`, `<Preview>`.
-- Hooks por categoría: **contexto** (`usePage`, `useSite`, `useSession`, `useNavigation`, `useI18n`), **fetch** (`useList`, `useDataFilters`, `useReferenceFieldData`, `useFetch`), **imagen** (`useGriddoImage`, `useGriddoImageExp`, `useImage`), **AI** (`useAiSearch`, `useAiAnswers`, `useAIReferenceField`), **interests/tracking** (`useSendInterests`, `useReceiveInterests`), **theme** (`useTheme`, `useGlobalTheme`, `useThemeColors`, `useThemeFont`, `useThemePrimitives`), **misc** (`useIsClient`, `useIsFirstRender`, `useSSR`, `useScript`, `useLocaleDate`, `useLink`, `usePageRelatedContent`, `useListWithDefaultStaticPage`).
+- Hooks por categoría: **contexto** (`usePage`, `useSite`, `useSession`, `useNavigation`, `useI18n`), **fetch** (`useList`, `useDataFilters`, `useReferenceFieldData`), **imagen** (`useGriddoImage`, `useGriddoImageExp`, `useImage`), **AI** (`useAiSearch`, `useAiAnswers`, `useAIReferenceField`), **interests/tracking** (`useSendInterests`, `useReceiveInterests`), **theme** (`useTheme`, `useGlobalTheme`, `useThemeColors`, `useThemeFont`, `useThemePrimitives`), **misc** (`useIsClient`, `useIsFirstRender`, `useSSR`, `useScript`, `useLocaleDate`, `useLink`, `usePageRelatedContent`, `useListWithDefaultStaticPage`).
 - Funciones standalone: `griddoAlertRegister`, `formatLocaleDate`. Utilidades: `getToken`, `getSiteID`, `getLangFromLocalStorage`.
 
 ## Componentes
@@ -63,14 +63,14 @@ Estos no se exportan públicamente; los monta `<Component>` automáticamente.
 | `useSession()` | `[state, setState]` | `SessionContext` | — |
 | `useNavigation()` | `{ isNavigation: true } \| null` | `NavigationContext` | — |
 | `useI18n({ locale? })` | `{ getTranslation, getNestedTranslation }` | `I18nContext`, `Site.siteLangs`, `Page.languageId` | `console.warn` si falta provider/lang. |
-| `useForm()` | `{ isForm: true } \| null` | `FormContext` | — |
-| `useModulePreview()` | `{ languageId? }` | `ModulePreviewContext` | — |
+| `useForm()` — **interno**, no está en `src/index.ts` | `{ isForm: true } \| null` | `FormContext` | — |
+| `useModulePreview()` — **interno**, no está en `src/index.ts` | `{ languageId? }` | `ModulePreviewContext` | — |
 
 ### Hooks de fetch
 
 | Hook | Endpoint | Cuándo dispara |
 |---|---|---|
-| `useFetch<T>(url, options?)` | el url que recibas | cambio de `url`. Wrapper genérico con `isLoading`/`isError`/`data`/`msg`/`isFirstFetch`. |
+| `useFetch<T>(url, options?)` — **interno**, no está en `src/index.ts` | el url que recibas | cambio de `url`. Wrapper genérico con `isLoading`/`isError`/`data`/`msg`/`isFirstFetch`. |
 | `useList<T>()` | `${publicApiUrl}/list/v2/...` (auto), `/list/fixed/` (manual), `/list/navigations/` (navigation) | al llamar `setQuery({ data })`. Gateado por `prevQueryRef` para no refetch por cache-buster. Si `contentType` está vacío (`mode=manual` con `fixed=[]`), retorna `{ items: [], totalItems: 0 }` sin red. |
 | `useDataFilters<T>()` | `${publicApiUrl}/filters/<contentType>/...` | igual al anterior. |
 | `useListWithDefaultStaticPage<T>(...)` | `useList` + computa `totalPages` y maneja la primera página estática | usado en templates con paginación SSG. |
@@ -165,7 +165,11 @@ Re-exports principales del barrel:
 ## Lo que NO se exporta
 
 - `<ComponentWrapper>`, `<FormWrapper>` — internos a `<Component>`.
-- `useFetch` — exportado en `hooks/index.ts` pero **no** en `src/index.ts` (uso interno).
+- `useFetch`, `useForm` — exportados en `hooks/index.ts` pero **no** en `src/index.ts` (uso interno).
+- `useModulePreview` — no llega ni al barrel de `hooks/index.ts`.
+
+  Los tres son **inalcanzables para un consumidor**: `package.json` solo declara `exports: { "." : … }`,
+  así que no hay subpath `@griddo/core/hooks` por donde importarlos.
 - Helpers de `hooks/utils.ts` (`getOptions`, `parseSources`, `parseRelations`, ...) — uso interno.
 - Helpers de `utils/images.ts` (`getGriddoDamURIWithParams`, `getDamIdFromDamUrl`, ...) — uso interno.
 - Mocks de `src/test/__mocks__/`.
@@ -184,4 +188,4 @@ Re-exports principales del barrel:
 - [Configuración](configuracion.md) — providers que cada hook requiere.
 - [Tipos y schemas](tipos-y-schemas.md) — los tipos públicos en detalle.
 - Invariantes (doc interna de @griddo/core, no incluida en el plugin) — contratos por hook/componente.
-- Reglas (doc interna de @griddo/core, no incluida en el plugin) — qué NO hacer al añadir API.
+- Reglas — qué NO hacer al añadir API.

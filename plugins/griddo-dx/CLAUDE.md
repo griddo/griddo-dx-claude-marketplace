@@ -68,7 +68,7 @@ Librería core de Griddo con:
 - `griddo start` → editor local (paquete `@griddo/ax`; script `yarn editor`)
 - `griddo-sync-schemas` → sube los schemas a la API (`@griddo/ax`; `yarn sync-schemas`)
 - `griddo-autotypes` → genera `autotypes.d.ts` desde `griddo.config.ts` (`@griddo/core`; `yarn autotypes`)
-- `griddo-render` → renders en local (`@griddo/render`; `yarn render`)
+- `griddo-render` → renders en local (`@griddo/cx`; `yarn render`)
 
 **griddo-sdk** (paquete npm sin scope: `griddo-sdk`)
 SDK JavaScript para automatizar tareas contra la API privada de Griddo desde scripts (migraciones, cargas masivas). No forma parte del runtime de la instancia; tiene documentación propia en su repositorio.

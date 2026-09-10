@@ -1,7 +1,7 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/tipos-y-schemas.md
-monorepo: v12.8.4 @ 8145d53a63
+monorepo: v12.8.4 @ 5cd13c2665
 fecha:    2026-09-10
 -->
 
@@ -224,5 +224,5 @@ const props: HeroProps = {
 - [Flujo](flujo.md) — cuándo se cargan los tipos (build vs runtime).
 - [Autotypes](autotypes.md) — cómo se genera `__AT__`.
 - [Superficie pública](superficie-publica.md) — qué namespaces están expuestos.
-- Reglas (doc interna de @griddo/core, no incluida en el plugin) — gotchas con `__AT__` y compatibilidad.
+- Reglas — gotchas con `__AT__` y compatibilidad.
 - Extender (doc interna de @griddo/core, no incluida en el plugin) — añadir un Field o un Schema.

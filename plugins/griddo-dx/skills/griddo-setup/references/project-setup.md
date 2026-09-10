@@ -281,7 +281,7 @@ O directamente desde terminal:
 
 ### Renders en local
 
-Los renders son procesos que incluyen preparación, comienzo, generación de estáticos, subida, información de fin de render, etc. Para renders locales, usa el CLI `griddo-render` que ofrece el paquete `@griddo/render`:
+Los renders son procesos que incluyen preparación, comienzo, generación de estáticos, subida, información de fin de render, etc. Para renders locales, usa el CLI `griddo-render` que ofrece el paquete `@griddo/cx`:
 
 ```bash
 # ayuda

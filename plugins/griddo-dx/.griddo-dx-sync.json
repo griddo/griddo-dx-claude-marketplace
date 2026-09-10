@@ -2,33 +2,33 @@
   "tool": "scripts/dx-docs-sync/sync.mjs",
   "monorepo": {
     "version": "12.8.4",
-    "sha": "8145d53a63"
+    "sha": "5cd13c2665"
   },
   "syncedAt": "2026-09-10",
   "files": {
     "skills/griddo-core/references/autotypes.md": {
       "source": "packages/griddo-core/llms-doc/autotypes.md",
-      "sha256": "0323a55fbcd5a016e3b23a843ff4ccae4a98834aa309264273956acd7896db3d",
+      "sha256": "2b27ec3ae7f553a97bb5f370204c6d8e14dc892dfa6376b3ff3688d2677db3c6",
       "sourceSha256": "8aa85ce2e2459534a58b4d52c0e145109464fb558cbeb47ee2a39a027f508fbb"
     },
     "skills/griddo-core/references/configuracion.md": {
       "source": "packages/griddo-core/llms-doc/configuracion.md",
-      "sha256": "7eba2a8061d2d85fac953e67d9c4cd8ab60bb35fd7f50780b86bab712498563c",
+      "sha256": "efe24a213bec8a05f9617df353d4305ae40a40f9a5e1d7aef05f56d092cdf036",
       "sourceSha256": "52a379648bc61fc7978ebebe6e5af23e20ac6e0bec9cabc754bf0deaa1b1cbc4"
     },
     "skills/griddo-core/references/flujo.md": {
       "source": "packages/griddo-core/llms-doc/flujo.md",
-      "sha256": "2cda3b27ebe1817443dd14940c6967b469b3400de700f6fb67d02a9413bd5dc7",
-      "sourceSha256": "3ac14ed4cbf8639fd4661265fb7dd1c215df014763f5a0ed01b7734ae091211c"
+      "sha256": "e8e2c61a08effb4171a963e6979a17fd96090ecafadbb780c3baa595197e07a4",
+      "sourceSha256": "fea7e7cf9043e36a1bb32efff325609382c78191099f62615b7173eba2f89bd8"
     },
     "skills/griddo-core/references/superficie-publica.md": {
       "source": "packages/griddo-core/llms-doc/superficie-publica.md",
-      "sha256": "42bf5437016d35dd1bd74f26badaaf32f8f238718bb9d8d00890a98b0925c941",
-      "sourceSha256": "00c7443f7181775185959b7367beaa0ed3279d72d23c5fb6dc38ebe70d8148d7"
+      "sha256": "c32502feb10f518d7b9b644cf73266b9b9bdfa11e759762d8007a21379633dd2",
+      "sourceSha256": "558196543baea9bfc6ea3124d627feba7dd864eb3fd749ff236b3b020fe242cb"
     },
     "skills/griddo-core/references/tipos-y-schemas.md": {
       "source": "packages/griddo-core/llms-doc/tipos-y-schemas.md",
-      "sha256": "ddaad5e6d61d2e3b2c898f1bac0464ff151af1830786c0550bdcb503c799c088",
+      "sha256": "f240a109ac7a99c245a34e3756fce5b5e8f31f752d2e2a32254331b07347b242",
       "sourceSha256": "cc2504ff7cbd00c625e3a1d628af864653b683438278e59b93a344fdbfd5f15a"
     }
   }
