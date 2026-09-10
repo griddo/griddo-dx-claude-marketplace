@@ -30,11 +30,12 @@ Cuando el developer describe un problema de rendimiento, sigue este orden:
    - Sugiere revisar imports innecesarios usando herramientas como [bundlephobia.com](https://bundlephobia.com/) o la extensión [import cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost)
    - Verifica que `yarn.lock` esté sincronizado con `package.json` (ejecutar `yarn install`)
 
-2. **Datos y distribuidores**
-   - Pregunta si está usando distribuidores innecesariamente o si puede usar API Pública
-   - Verifica que haya límites en los esquemas
-   - Revisa si `hasDistributorData: true` está añadiendo peso a la página
-   - Sugiere paginación real con API Pública en lugar de "solo visual"
+2. **Datos**
+   - Verifica que haya límites en los esquemas (nunca "todos los resultados")
+   - Sugiere paginación real en lugar de "solo visual": para templates SSG existe
+     `useListWithDefaultStaticPage`
+   - Si se trae datos en runtime, comprueba que use `useList` / `useDataFilters` de `@griddo/core`
+     y no un `fetch` a mano en un `useEffect`
 
 3. **Imágenes**
    - Verifica que use `<GriddoImage>` con `responsive` correctamente configurado
@@ -97,7 +98,7 @@ Cuando el developer describe un problema de rendimiento, sigue este orden:
 
 - Si usas `useState` que afecta al render, asigna valor por defecto
 - Envuelve `useEffect` complejo en custom hook
-- No uses `useEffect` para datos precargados; usa API Pública en su lugar
+- No uses `useEffect` para datos que ya vienen en la página: píntalos directamente
 - Evita `mode:list` si no es paginación estática
 
 ```tsx
@@ -121,14 +122,14 @@ const [count, setCount] = useState(0) // valor por defecto
 const HeavyModule = React.lazy(() => import('./HeavyModule'))
 ```
 
-### Datos y API Pública
+### Datos
 
-- Usa distribuidores solo si datos son críticos (first paint)
-- Para datos below the fold: usa API Pública + spinners
 - Limita elementos en esquemas (nunca "todos los resultados")
-- Activa caché de API Pública con llamadas consistentes
-- Filtra campos en API Pública (ej: solo nombre, no 20 propiedades)
-- Usa paginación real, no visual
+- Si traes datos en runtime, hazlo con `useList` / `useDataFilters` de `@griddo/core`
+- La caché de la API Pública necesita llamadas consistentes: `useList` ya te la da (va gateado por
+  `prevQueryRef` para no refetch por el cache-buster)
+- Pide solo los campos que necesites en el `setQuery({ data })`, no las 20 propiedades
+- Usa paginación real, no visual: `useListWithDefaultStaticPage` para templates SSG
 
 ```jsx
 // Malo: carga 200 elementos, muestra 6
@@ -153,6 +154,17 @@ Consulta `references/performance-guide.md` en este skill para:
 - Ejemplos avanzados de optimización
 - Casos de uso de persistencia para importación de datos
 
+## Skills relacionadas
+
+Este skill cubre **qué optimizar**. Para el **cómo** de los hooks de datos que aquí se recomiendan
+(`useList`, `useDataFilters`, `useListWithDefaultStaticPage`), su firma y sus condiciones:
+
+| Necesitas | Skill |
+|---|---|
+| Cómo se usa un hook concreto, con ejemplos | `griddo-hooks` |
+| Qué exporta `@griddo/core` y qué es interno o está deprecado | `griddo-core` |
+| Props de `<GriddoImage>` y del resto de fields de imagen | `griddo-field-reference` |
+
 ## Workflow típico
 
 1. Pregunta cuál es el problema específico (lento en general, métrica de CWV específica, etc.)
@@ -163,4 +175,4 @@ Consulta `references/performance-guide.md` en este skill para:
 
 ---
 
-**Nota:** Griddo genera sitios estáticos con React SSR. El rendimiento depende de decisiones en build-time (distribuidores, bundle, datos) y runtime (lazy loading, state management).
+**Nota:** Griddo genera sitios estáticos con React SSR. El rendimiento depende de decisiones en build-time (bundle, límites de datos, imágenes) y runtime (lazy loading, state management).

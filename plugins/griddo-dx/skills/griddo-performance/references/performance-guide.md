@@ -44,7 +44,9 @@ Para meterlos de manera inline solo tenemos que importar los css en el archivo `
 
 #### Formato adecuado
 
-`<CloudinaryImage>` y `<GriddoImage>` se encargan de ello. Ojo con el format avif que puede llegar a ser un 50% más pesado de procesar por la CPU.
+`<GriddoImage>` se encarga de ello: sirve un `<picture>` con un `<source>` por formato (avif/webp) y un `<img>` jpeg de fallback. Ojo con el formato avif, que puede llegar a ser un 50% más pesado de procesar por la CPU.
+
+No uses `<CloudinaryImage>`: está deprecado y además es la variante para imágenes alojadas en Cloudinary, no en el DAM de Griddo.
 
 #### Tamaños para `srcSet`
 
@@ -86,7 +88,7 @@ Usa `fetchpriority="low"` para hacer lo contrario, esto puede ser útil para dej
 
 ### Carga de assets
 
-En ciertas ocasiones nos puede venir bien cargar imágenes de forma estática cuando son imágenes que van en el propio componente y no son de usuario del editor.
+En ciertas ocasiones te puede venir bien cargar imágenes de forma estática cuando son imágenes que van en el propio componente y no son de usuario del editor.
 
 Si tenemos en la carpeta del repo `/static/my-image.png` podremos poner:
 
@@ -113,7 +115,7 @@ const Module = React.lazy(() => import('./Module'))
 
 ## Optimiza el rendimiento de tu instancia
 
-Es muy importante optimizar la instancia para obtener buenos valores en términos de rendimiento y eficiencia, ya que repercuten tanto en la experiencia de usuario como en la propia experiencia nuestra al desarrollar y en el posicionamiento.
+Es muy importante optimizar la instancia para obtener buenos valores en términos de rendimiento y eficiencia, ya que repercuten tanto en la experiencia de usuario como en tu propia experiencia al desarrollar y en el posicionamiento.
 
 En este doc vamos a revisar algunos errores comunes y cómo solucionarlos. Algunos de ellos ni siquiera son errores, simplemente son formas que específicamente en Griddo no son las más eficientes pero tienen una alternativa que sí lo es.
 
@@ -127,31 +129,6 @@ Si puedes hacer que los scripts de importación se ejecuten cuando el proceso de
 De esta manera, cuando se ejecute el primer render por la mañana, ese único render actualizará todas las páginas con lo que hayas importado durante la noche.
 
 Ese primer render será más lento porque tiene que rehacer todos los distribuidores. Pero si esos datos solo se tocan desde el proceso de importación, una vez se haya hecho el primer render, ya todos los demás renders serán más rápidos (a partir de la release 10.6.14).
-
-### Siempre que puedas, usa API Pública
-
-Soluciona:
-- Tiempos de renderizado
-- CWV
-
-Usar distribuidores para que la página tenga directamente toda la información desde el principio es muy cómodo, pero no siempre es lo más conveniente. Estos distribuidores van a hacer que se tarde más en renderizar la página pero también van a generar páginas más pesadas que van a repercutir en peores tiempos de render.
-
-La mayoría de las veces no vas a necesitar tener los datos precargados. Especialmente usa la api pública para obtener los datos cuando:
-
-- Los datos que te quieres traer no son necesarios para presentar la información básica de la página en primera pantalla sin scroll.
-- Los datos que te quieres traer tienen mucho peso (más de 10kb, por ejemplo).
-
-Por ejemplo, si a mitad de página se va a presentar un módulo de "Noticias recientes", no necesitas para nada tener cargadas esas noticias en la página, te las puedes traer cuando ya se ha cargado la página con la api pública.
-
-Como regla general, salvo que imperativamente los datos del distribuidor deban existir desde el momento 0 en la página (que es casi nunca, porque raro es que tenga que ser en el segundo 0 y no valga el segundo 0.2) usa api pública.
-
-Para comprobar que no estás cargando los datos en la página y que vienen desde la api pública, en el inspector de red examina qué información recibes en el page-data.json de esa página. Si ves que te está rellenando la información del distribuidor en el page-data.json, seguramente sea porque tienes activado hasDistributorData: true, en cuyo caso el proceso de renderizado añadirá la propiedad queriedItems con todos los datos. Tener ese hasDistributorData en true hace que en el proceso de renderizado se haga una consulta a la api para traerse los datos y todos esos datos vayan en la página, aumentando su peso y tiempo de renderizado; algo que no necesitas si te estás trayendo los datos de api pública y paginados.
-
-Recomendación 1: usa spinners o cualquier estado de "Loading" para mostrar que hay una información que se está trayendo y que se actualizará esa sección de la página cuando te terminen de llegar los datos.
-
-Recomendación 2: sopesa tener un módulo de React que reciba como parámetros el hook que se trae los datos (o incluso el data del distribuidor) y el módulo que los dibuja, y que ese modulo se encargue de dibujar el spinner mientras no tenga datos y cuando tenga datos mostrar el módulo que los dibuja pasándole los datos.
-
-Recomendación 3: no lo he testeado en real, pero es posible que si esa información que te traes de api pública te esperas 3 segundos a traértela (no siempre se puede, pero a lo mejor en algún caso sí se puede porque va muy abajo en la página, por ejemplo), también mejores los CWV. Aunque no lo he verificado. Es solo una sospecha.
 
 ### Limita siempre la cantidad de datos que te traes
 
@@ -173,11 +150,14 @@ Soluciona:
 - Tiempos de renderizado
 - CWV
 
-La api pública usa un sistema de caché. Esto hace que si dos usuarios hacen la misma llamada al mismo endpoint de api pública, en realidad solo se ejecute contra el servidor la primera y las siguientes estén cacheadas durante un pequeño tiempo. Para que funcione la caché, la llamada a la api pública debe ser consistente, es decir, exactamente igual y en el mismo orden de parámetros (si usas el hook de Core, el orden de elementos siempre será el mismo).
+La api pública usa un sistema de caché. Esto hace que si dos usuarios hacen la misma llamada al mismo endpoint de api pública, en realidad solo se ejecute contra el servidor la primera y las siguientes estén cacheadas durante un pequeño tiempo. Para que funcione la caché, la llamada a la api pública debe ser consistente, es decir, exactamente igual y en el mismo orden de parámetros (si usas `useList` o `useDataFilters` de `@griddo/core`, el orden de elementos siempre será el mismo, así que la caché te funciona sin hacer nada).
 
-Recuerda que algunas peticiones a la api pública te permiten obtener solo los campos que necesites. Es decir, si tienes un dato estructurado que cada elemento tiene 20 propiedades y pesa en total unos 10k por dato, a lo mejor solo necesitas una de las propiedades que pesa solo unos bytes, por lo que la respuesta será mucho más rápida si solo te traes lo que necesites.
+Recuerda que algunas peticiones a la api pública te permiten obtener solo los campos que necesites, y que el query lo controlas tú desde el `setQuery({ data })` de `useList`. Es decir, si tienes un dato estructurado que cada elemento tiene 20 propiedades y pesa en total unos 10k por dato, a lo mejor solo necesitas una de las propiedades que pesa solo unos bytes, por lo que la respuesta será mucho más rápida si solo te traes lo que necesites.
 
 ### Usa paginación real
+
+Para paginación en templates SSG tienes `useListWithDefaultStaticPage`, que envuelve a `useList`, computa
+`totalPages` y se encarga de la primera página estática. Consulta la skill `griddo-core` para su firma.
 
 Soluciona:
 - Tiempos de renderizado
@@ -185,9 +165,9 @@ Soluciona:
 
 La paginación existe desde los principios de los tiempos para evitar listados demasiado pesados. No tiene sentido usar paginación "solo visual", es decir, solo se ve la primera página de resultados, pero en realidad te has descargado desde el principio todos los datos.
 
-Aparte de que los datos tienen que venir de api pública (como mucho te das el lujo de traerte los datos de la primera página de resultados), tienes que ir pidiendo a la api pública solo los datos que necesites y solo para la página que vas a añadir.
+Si paginas en runtime, pide a la api pública solo los datos que necesites y solo los de la página que vas a añadir.
 
-Si algo va paginado, nunca nos descargamos todos los datos del tirón, como mucho nos traemos los datos de esa página, y siempre que podamos los datos nos los traemos de api pública.
+Si algo va paginado, no te descargues todos los datos del tirón: trae como mucho los de esa página.
 
 ### No uses mode:list si no lo vas a usar de verdad
 
@@ -198,7 +178,7 @@ Si tienes una template de tipo listado con mode:list, se creará una réplica de
 
 Mode:list es solo para hacer un paginado estático sin filtros. Hoy en día casi ningún cliente requiere de esto. No lo hagas si no lo necesitas específicamente (e incluso si lo necesitas, plantéate si no se puede hacer de otra manera con api pública).
 
-Nota: si encima la template de listado tiene un distribuidor extra, el ahorro en tiempo de transferencia y renderizado solo por usar paginado con api pública y quitar el mode:list puede ser brutal.
+Nota: si encima la template de listado tiene un distribuidor extra, cada una de esas páginas réplica se lleva también sus datos, así que el ahorro en número de páginas y en bytes transferidos se multiplica.
 
 ### Usa datos estructurados limpios
 
@@ -273,7 +253,7 @@ No, no siempre es necesarios utilizarlo, así que si vas de cabeza a por él, ha
 
 ### Escóndelo
 
-Lo he adelantado antes, pero diré más. Si el useEffect no va a compartirse con otros componentes y está escrito para un módulo en concreto, también deberías convertirlo en un custom hook. En ese caso puedes dejarlo en el mismo archivo del componente, indicando así de forma implícita que ese hook es solo para ese módulo.
+Como se ha adelantado arriba: si el useEffect no va a compartirse con otros componentes y está escrito para un módulo en concreto, también deberías convertirlo en un custom hook. En ese caso puedes dejarlo en el mismo archivo del componente, indicando así de forma implícita que ese hook es solo para ese módulo.
 
 #### Ejemplo
 
@@ -392,7 +372,7 @@ export default {
 
 ### Tipografías en el Editor vs. Web publicada
 
-El editor de Griddo (AX) solo soporta `onRenderBody` para incluir elementos en el `<head>` y en el `<body>`. Por lo tanto, con `onRenderBody` nos vale para todo lo que se quiera incluir para el editor.
+El editor de Griddo (AX) solo soporta `onRenderBody` para incluir elementos en el `<head>` y en el `<body>`. Por lo tanto, `onRenderBody` te vale para todo lo que quieras incluir en el editor.
 
 Si por ejemplo se añade la carga de las tipografías en `onPreRenderHTML` que tiene casi la misma funcionalidad pero se ejecuta en otro ciclo dentro del render de Gatsby, las tipografías no se verán en el editor, porque no soporta este ciclo.
 
@@ -429,7 +409,7 @@ El parámetro `pathname` permite discriminar:
 
 ## Buenas prácticas con yarn.lock
 
-En algunas instancias, hemos notado un problema recurrente relacionado con el manejo del archivo `yarn.lock`. Este archivo asegura que todos los desarrolladores utilicen las mismas versiones de dependencias, lo cual es crucial para mantener estabilidad y consistencia.
+En algunas instancias aparece un problema recurrente relacionado con el manejo del archivo `yarn.lock`. Este archivo asegura que todos los desarrolladores utilicen las mismas versiones de dependencias, lo cual es crucial para mantener estabilidad y consistencia.
 
 ### El problema
 

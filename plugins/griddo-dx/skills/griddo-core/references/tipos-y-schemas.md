@@ -1,7 +1,7 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/tipos-y-schemas.md
-monorepo: v12.8.4 @ 5cd13c2665
+monorepo: v12.8.4 @ 4a5dfbd298
 fecha:    2026-09-10
 -->
 
@@ -50,7 +50,7 @@ Tipos clave (no exhaustivo):
 | `Fields.Toggle` / `Fields.UniqueCheck` | boolean. |
 | `Fields.Image` | objeto con `url`, `alt`, `width`, `height`, `position`, `damId`, `publicId`, ... |
 | `Fields.File` | objeto con `url`, `fileName`, `fileType`, `tags`, `folder`, `contentInUse`, ... |
-| `Fields.Url` | `{ href?, linkToURL?, linkTo?, newTab?, noFollow?, ... }`. Lo consume `<GriddoLink>` y `useLink`. |
+| `Fields.Url` | `{ href?, linkToURL?, linkTo?, newTab?, noFollow?, ... }`. Lo consume `<GriddoLink>` y el `useLink` **deprecated**. |
 | `Fields.Heading<HeadingTagsType?>` | `{ content?, tag? }` (`h1`-`h6`). |
 | `Fields.Reference<ContentType>` | El "data" de un `ReferenceField`. Lo consume `useReferenceFieldData`, `useList`, `useDataFilters`. Tiene `mode`, `sources`, `fixed`, `quantity`, `order`, `fullRelations`, `allLanguages`, `preferenceLanguage`, `referenceId`, `lang`, `site`, `related`. |
 | `Fields.QueriedData<ContentType>` | `Array<QueriedDataItem<ContentType>>` — lo que retorna `useReferenceFieldData`. |

@@ -1,7 +1,7 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/configuracion.md
-monorepo: v12.8.4 @ 5cd13c2665
+monorepo: v12.8.4 @ 4a5dfbd298
 fecha:    2026-09-10
 -->
 
@@ -110,7 +110,7 @@ El tipo `SiteContextProps` extiende `Site`. Lo más relevante:
 | `languageId` | `useI18n`, `useReferenceFieldData`, `useList`, `useDataFilters` | ID de idioma de la página. |
 | `pageLanguages` | `usePage` (computa `pageLanguagesWithLivePages` y `locale`/`ISOLocale`) | Versiones por idioma. |
 | `componentSchemas` | `<ComponentWrapper>` | Para mostrar `displayName` y `schemaType` en el editor. |
-| `fullPath`, `fullUrl` | `<GriddoLink>` (resuelve relative-to-root), `<Link>` legacy (parseAnchor) | Resolución de rutas internas. |
+| `fullPath`, `fullUrl` | `<GriddoLink>` (resuelve relative-to-root), `<Link>` **deprecated** (parseAnchor) | Resolución de rutas internas. |
 
 ## Renderers
 

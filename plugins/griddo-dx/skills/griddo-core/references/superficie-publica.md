@@ -1,7 +1,7 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/superficie-publica.md
-monorepo: v12.8.4 @ 5cd13c2665
+monorepo: v12.8.4 @ 4a5dfbd298
 fecha:    2026-09-10
 -->
 
@@ -11,7 +11,7 @@ fecha:    2026-09-10
 
 - El barrel `src/index.ts` re-exporta **todo** lo público. Si algo no está ahí, no es API estable y los consumidores no deben importarlo por path interno.
 - Componentes principales: `<Page>`, `<Component>`, `<GriddoLink>`, `<GriddoImage>`, `<GriddoImageExp>`, `<GriddoBackgroundImage>`, `<CloudinaryImage>` (deprecated), `<CloudinaryBackgroundImage>` (deprecated), `<LdJson>`, `<ModulePreview>`, `<Preview>`.
-- Hooks por categoría: **contexto** (`usePage`, `useSite`, `useSession`, `useNavigation`, `useI18n`), **fetch** (`useList`, `useDataFilters`, `useReferenceFieldData`), **imagen** (`useGriddoImage`, `useGriddoImageExp`, `useImage`), **AI** (`useAiSearch`, `useAiAnswers`, `useAIReferenceField`), **interests/tracking** (`useSendInterests`, `useReceiveInterests`), **theme** (`useTheme`, `useGlobalTheme`, `useThemeColors`, `useThemeFont`, `useThemePrimitives`), **misc** (`useIsClient`, `useIsFirstRender`, `useSSR`, `useScript`, `useLocaleDate`, `useLink`, `usePageRelatedContent`, `useListWithDefaultStaticPage`).
+- Hooks por categoría: **contexto** (`usePage`, `useSite`, `useSession`, `useNavigation`, `useI18n`), **fetch** (`useList`, `useDataFilters`, `useReferenceFieldData`), **imagen** (`useGriddoImage`, `useGriddoImageExp`, y `useImage` **deprecated**), **AI** (`useAiSearch`, `useAiAnswers`, `useAIReferenceField`), **interests/tracking** (`useSendInterests`, `useReceiveInterests`), **theme** (`useTheme`, `useGlobalTheme`, `useThemeColors`, `useThemeFont`, `useThemePrimitives`), **misc** (`useIsClient`, `useIsFirstRender`, `useSSR`, `useScript`, `useLocaleDate`, `useLink` (**deprecated**), `usePageRelatedContent`, `useListWithDefaultStaticPage`).
 - Funciones standalone: `griddoAlertRegister`, `formatLocaleDate`. Utilidades: `getToken`, `getSiteID`, `getLangFromLocalStorage`.
 
 ## Componentes
@@ -126,7 +126,7 @@ Los hooks **no leen del DOM ni del CSS computado**; trabajan sobre la estructura
 | `useSSR()` | Detecta si estamos en server-side. |
 | `useScript(src, options?)` | Inyecta `<script>` dinámico con tracking de `loaded`/`error`. |
 | `useLocaleDate(...)` | Wrapper de `formatLocaleDate` con locale del page. |
-| `useLink()` | Atajo a `linkComponent` del `SiteContext` (legacy, lo usa `<Link>`). |
+| `useLink()` | Atajo a `linkComponent` del `SiteContext` (lo usa el `<Link>` viejo). **deprecated** — usa `<GriddoLink>`. |
 | `useContentType()` | Hook helper para obtener el content type relacionado de la página. |
 | `useContentTypeNavigation()` | Variante para nav (next/previous). |
 
