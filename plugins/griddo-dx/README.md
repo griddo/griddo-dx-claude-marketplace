@@ -25,6 +25,7 @@ El plugin Griddo DX te acompaña en cada etapa del desarrollo de una instancia G
 | `griddo-schema` | Patrones avanzados de schemas | Validación, estructura, ComponentArray, etc. |
 | `griddo-setup` | Configuración de proyectos nuevos, tutoriales | Clonar starter, .env, yarn scripts |
 | `griddo-performance` | Optimización de rendimiento | Lazy-loading, code-splitting, imágenes |
+| `griddo-cx` | Build y publicación de la instancia: modos de render y qué aporta la instancia | No se ve un cambio, build que falla por configuración, qué se publica |
 | `griddo-guides` | Guías de integraciones complejas | SSO, GPX, AI Search, SEO, analytics |
 
 ## Agentes disponibles

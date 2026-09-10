@@ -314,6 +314,7 @@ Cuando el developer necesite una tarea, redirige a la skill/agente correspondien
 | Entender patrones de schemas y estructura | `griddo-schema` |
 | Configurar un proyecto nuevo o seguir tutoriales | `griddo-setup` |
 | Optimizar rendimiento (lazy-loading, imágenes, bundles) | `griddo-performance` |
+| Por qué no se ve un cambio, modos de render, qué se publica, o un build que falla por configuración de la instancia | `griddo-cx` |
 | Implementar SSO, GPX, AI Search, SEO o integraciones | `griddo-guides` |
 | **Revisar si un schema está bien definido** | **`schema-reviewer` (agente)** |
 
