@@ -1,11 +1,11 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
-fuente:   packages/griddo-core/llms-doc/api-publica.md
-monorepo: v12.8.4 @ 80b4a35a50
-fecha:    2026-09-09
+fuente:   packages/griddo-core/llms-doc/superficie-publica.md
+monorepo: v12.8.4 @ 8145d53a63
+fecha:    2026-09-10
 -->
 
-# API pública
+# Superficie pública de `@griddo/core`
 
 ## TL;DR
 

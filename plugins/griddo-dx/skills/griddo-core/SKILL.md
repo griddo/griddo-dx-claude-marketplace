@@ -26,16 +26,16 @@ complementa con `griddo-hooks`, `griddo-field-reference` y `griddo-schema`.
 <!-- dx-sync:references:start -->
 | Referencia | Tema | Resumen |
 |---|---|---|
-| `references/api-publica.md` | api-publica | Superficie pública de `@griddo/core` — componentes, hooks, contextos, funciones y utilidades exportadas por el barrel `src/index.ts`. |
 | `references/autotypes.md` | autotypes | Binario `griddo-autotypes` — entrypoint, parsers, salida, errores y cómo encaja con el sistema de tipos. |
 | `references/configuracion.md` | configuracion | Peer deps, Provider tree obligatorio, renderers, autotypes y la cadena de configuración que `@griddo/core` requiere del consumidor. |
 | `references/flujo.md` | flujo | Ciclo de consumo de `@griddo/core` — build de instancia (autotypes), runtime (Provider tree + render), y dependencias con `@griddo/cx`, `@griddo/components`, `@griddo/ax`. |
+| `references/superficie-publica.md` | superficie-publica | Superficie pública de `@griddo/core` — componentes, hooks, contextos, funciones y utilidades exportadas por el barrel `src/index.ts`. |
 | `references/tipos-y-schemas.md` | tipos-y-schemas | Sistema de tipos de `@griddo/core` — `Schema` (lo que declara la instancia), `Fields` (lo que devuelve la API), `Core` (entidades runtime) y `Theme`. |
 <!-- dx-sync:references:end -->
 
 ## Cómo usar esta skill
 
-1. **Antes de afirmar que algo se exporta de `@griddo/core`**, compruébalo en `references/api-publica.md`.
+1. **Antes de afirmar que algo se exporta de `@griddo/core`**, compruébalo en `references/superficie-publica.md`.
    Si no está ahí, no es API pública: puede ser un wrapper de la instancia (`GriddoModule`,
    `GriddoComponent` viven en `@ui/modules` y `@ui/components`) o un hook de la instancia.
 2. **Un import falla o un tipo sale `any`** → `references/configuracion.md` (providers, peer deps) y
@@ -45,7 +45,7 @@ complementa con `griddo-hooks`, `griddo-field-reference` y `griddo-schema`.
 4. **Qué campos admite un `Schema.Module`, `Schema.Template`, content type o form** →
    `references/tipos-y-schemas.md` (namespaces y ficheros `schema-fields/*`), y para cada field concreto
    la skill `griddo-field-reference`.
-5. **Deprecaciones**: `api-publica.md` marca lo deprecado (`<Link>`, `<CloudinaryImage>`, `useImage`,
+5. **Deprecaciones**: `superficie-publica.md` marca lo deprecado (`<Link>`, `<CloudinaryImage>`, `useImage`,
    `useLink`, …). No generes código con símbolos deprecados; propone el reemplazo indicado.
 
 ## Notas importantes

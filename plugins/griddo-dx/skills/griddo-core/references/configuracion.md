@@ -1,8 +1,8 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/configuracion.md
-monorepo: v12.8.4 @ 80b4a35a50
-fecha:    2026-09-09
+monorepo: v12.8.4 @ 8145d53a63
+fecha:    2026-09-10
 -->
 
 # Configuración
@@ -192,6 +192,6 @@ Estos sufijos los usan los parsers para nombrar interfaces. Cambiarlos modifica 
 ## Relacionado
 
 - [Flujo](flujo.md) — cuándo y cómo se monta cada provider.
-- [API pública](api-publica.md) — qué hace cada componente/hook si el provider falta.
+- [Superficie pública](superficie-publica.md) — qué hace cada componente/hook si el provider falta.
 - [Autotypes](autotypes.md) — detalle del binario.
 - Reglas (doc interna de @griddo/core, no incluida en el plugin) — gotchas sobre providers y duplicación de React.

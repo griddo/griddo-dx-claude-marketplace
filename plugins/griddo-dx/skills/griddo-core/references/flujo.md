@@ -1,8 +1,8 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/flujo.md
-monorepo: v12.8.4 @ 80b4a35a50
-fecha:    2026-09-09
+monorepo: v12.8.4 @ 8145d53a63
+fecha:    2026-09-10
 -->
 
 # Flujo de consumo
@@ -162,7 +162,7 @@ yarn build
 ## Relacionado
 
 - [Configuración](configuracion.md) — qué providers son obligatorios y peer deps.
-- [API pública](api-publica.md) — superficie de componentes/hooks/contextos.
+- [Superficie pública](superficie-publica.md) — superficie de componentes/hooks/contextos.
 - [Autotypes](autotypes.md) — internals del CLI.
 - [Tipos y schemas](tipos-y-schemas.md) — cómo se relacionan los tipos con el config.
 - Arquitectura (doc interna de @griddo/core, no incluida en el plugin) — layers internos.
