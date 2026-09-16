@@ -1,6 +1,6 @@
 # Griddo DX Plugin
 
-Plugin especializado en desarrollo de instancias Griddo — scaffolding de módulos, templates, content types, referencia completa de fields, hooks, schemas y el contrato de @griddo/core.
+Plugin especializado en desarrollo de instancias Griddo — scaffolding de módulos, templates, content types, referencia completa de fields, hooks, schemas y la superficie pública de @griddo/core.
 
 ## ¿Qué hace este plugin?
 

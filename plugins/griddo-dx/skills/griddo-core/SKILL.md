@@ -11,9 +11,9 @@ description: >
   "qué versión de React", o dude de si algo es API pública o interna de core.
 ---
 
-# griddo-core: contrato de `@griddo/core`
+# griddo-core: la superficie pública de `@griddo/core`
 
-Esta skill es la **referencia de contrato** de `@griddo/core`, la librería que toda instancia importa.
+Esta skill es la **referencia de la superficie pública** de `@griddo/core`, la librería que toda instancia importa.
 Sus referencias se **generan desde el monorepo de Griddo** (`packages/griddo-core/llms-doc/`, filtradas
 por audiencia «consumidor»/«ambos») y llevan una cabecera con la versión y el commit de origen. No las
 edites a mano: se sobrescriben en el siguiente sync.
