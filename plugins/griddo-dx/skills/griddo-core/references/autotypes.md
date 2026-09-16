@@ -1,8 +1,8 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/autotypes.md
-monorepo: v12.8.4 @ 5cd13c2665
-fecha:    2026-09-10
+monorepo: v12.9.0 @ a070ba7a0d
+fecha:    2026-09-16
 -->
 
 # Autotypes — el CLI
@@ -216,4 +216,4 @@ Si añades un nuevo tipo de field, **debes** registrarlo en ambos enums y en el 
 - [Configuración](configuracion.md) — sufijos configurables (`AutoTypesConfig`).
 - Arquitectura (doc interna de @griddo/core, no incluida en el plugin) — boundary CLI vs lib React.
 - Extender (doc interna de @griddo/core, no incluida en el plugin) — añadir un parser nuevo.
-- Reglas — gotchas (path alias, exit codes).
+- Invariantes (doc interna de @griddo/core, no incluida en el plugin) — contratos del CLI y su taxonomía de errores.

@@ -1,8 +1,8 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/flujo.md
-monorepo: v12.8.4 @ 5cd13c2665
-fecha:    2026-09-10
+monorepo: v12.9.0 @ a070ba7a0d
+fecha:    2026-09-16
 -->
 
 # Flujo de consumo
@@ -56,7 +56,7 @@ Un `autotypes.d.ts` con un default export `__AT__` que contiene tipos como `__AT
 ### Si falla
 
 - Error en `loadConfigTs` → exit 1, log con stack.
-- Error en cualquier parser → log con `${kleur.red(" ✘")} AutoTypes` y el `e`. **No exit 1** — el script atrapa y solo loguea, así un parser roto no aborta el build entero. Esto es discutible (ver `reglas.md`).
+- Error en cualquier parser → log con `${kleur.red(" ✘")} AutoTypes` y el `e`. **No exit 1** — el script atrapa y solo loguea, así un parser roto no aborta el build entero. Esto es discutible (ver `invariantes.md` (doc interna de @griddo/core, no incluida en el plugin)).
 
 ## Fase 2 — Provider tree de la instancia
 
@@ -166,4 +166,4 @@ yarn build
 - [Autotypes](autotypes.md) — internals del CLI.
 - [Tipos y schemas](tipos-y-schemas.md) — cómo se relacionan los tipos con el config.
 - Arquitectura (doc interna de @griddo/core, no incluida en el plugin) — layers internos.
-- Reglas — qué NO hacer al consumir o extender.
+- Invariantes (doc interna de @griddo/core, no incluida en el plugin) — contratos del CLI y qué aborta el build.

@@ -1,8 +1,8 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/superficie-publica.md
-monorepo: v12.8.4 @ 4a5dfbd298
-fecha:    2026-09-10
+monorepo: v12.9.0 @ a070ba7a0d
+fecha:    2026-09-16
 -->
 
 # Superficie pública de `@griddo/core`
@@ -188,4 +188,3 @@ Re-exports principales del barrel:
 - [Configuración](configuracion.md) — providers que cada hook requiere.
 - [Tipos y schemas](tipos-y-schemas.md) — los tipos públicos en detalle.
 - Invariantes (doc interna de @griddo/core, no incluida en el plugin) — contratos por hook/componente.
-- Reglas — qué NO hacer al añadir API.

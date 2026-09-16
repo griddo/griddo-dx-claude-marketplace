@@ -1,8 +1,8 @@
 <!-- griddo-dx-sync
 GENERADO desde el monorepo griddo/griddo — NO EDITAR A MANO: el siguiente sync lo sobrescribe.
 fuente:   packages/griddo-core/llms-doc/configuracion.md
-monorepo: v12.8.4 @ 4a5dfbd298
-fecha:    2026-09-10
+monorepo: v12.9.0 @ a070ba7a0d
+fecha:    2026-09-16
 -->
 
 # Configuración
@@ -131,6 +131,8 @@ Si `renderer` no se setea, `<Component>` cae al branch final ("CX") y renderiza 
 
 `process.env.NODE_ENV` se reemplaza a `"production"` en el bundle de Rollup (es lo que usa React internamente).
 
+La superficie para asistentes de IA es la excepción aparente: `schemas.config.llms` decide la forma del Markdown por página y del `llms.txt`, pero esos ficheros los escribe el render, y sus dos interruptores (`GRIDDO_RENDER_ENABLED_LLM_MD`, `GRIDDO_RENDER_DISABLE_LLMS_TXT`) los lee él. Los ajustes, y el orden para encenderlos, en [Tipos y schemas](tipos-y-schemas.md).
+
 ## Configuración del binario `griddo-autotypes`
 
 ### Ejecución
@@ -194,4 +196,4 @@ Estos sufijos los usan los parsers para nombrar interfaces. Cambiarlos modifica 
 - [Flujo](flujo.md) — cuándo y cómo se monta cada provider.
 - [Superficie pública](superficie-publica.md) — qué hace cada componente/hook si el provider falta.
 - [Autotypes](autotypes.md) — detalle del binario.
-- Reglas — gotchas sobre providers y duplicación de React.
+- Invariantes (doc interna de @griddo/core, no incluida en el plugin) — contratos de los providers y qué devuelve cada hook si falta.
