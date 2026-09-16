@@ -1,7 +1,7 @@
 ---
 name: griddo-core
 description: >
-  Contrato de @griddo/core para instancias: qué exporta exactamente (componentes, hooks, funciones
+  Superficie pública de @griddo/core para instancias: qué exporta exactamente (componentes, hooks, funciones
   y los namespaces de tipos Schema, Fields, Core, Theme), qué providers hay que montar (SiteProvider,
   PageProvider, I18nProvider), qué renderers existen (gatsby, editor, preview, forms, ssg, sharedPage)
   y qué cambia cada uno, peer dependencies, el CLI griddo-autotypes y el puente __AT__ de autotypes.d.ts.
