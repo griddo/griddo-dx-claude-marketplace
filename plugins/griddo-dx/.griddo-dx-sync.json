@@ -1,0 +1,35 @@
+{
+  "tool": "scripts/dx-docs-sync/sync.mjs",
+  "monorepo": {
+    "version": "12.9.0",
+    "sha": "a070ba7a0d"
+  },
+  "syncedAt": "2026-09-16",
+  "files": {
+    "skills/griddo-core/references/autotypes.md": {
+      "source": "packages/griddo-core/llms-doc/autotypes.md",
+      "sha256": "96e05fa340594da7139ada7e4ad9e7febd19926d5ffe9166bec4018ee20ea84a",
+      "sourceSha256": "3cef103afb6fae2eae25aae5ea3b1cc9e294b9f33edbdc72036e3fd5ee0df845"
+    },
+    "skills/griddo-core/references/configuracion.md": {
+      "source": "packages/griddo-core/llms-doc/configuracion.md",
+      "sha256": "13fb1c927b7746c5f8ebbef790696ad1960351d2bc4181aab487588b935fd037",
+      "sourceSha256": "331ed16610177e2f0c02130941437b466b2d5cbdfe1559480f75ec1f06d00776"
+    },
+    "skills/griddo-core/references/flujo.md": {
+      "source": "packages/griddo-core/llms-doc/flujo.md",
+      "sha256": "c8cfb4514bb78abf81d599d260d4d0e1672097ee97d07e41a810dfa326d1ffd1",
+      "sourceSha256": "c09be0f21ef5c94b35c51f08fbdd2c2ac2f294900edb444ba093b5d534b3c069"
+    },
+    "skills/griddo-core/references/superficie-publica.md": {
+      "source": "packages/griddo-core/llms-doc/superficie-publica.md",
+      "sha256": "f926b34a864677879e131cd49fff7896313b1bb658ac4527d1b33b7a3eb141b4",
+      "sourceSha256": "82cad2c5b12f6506c1e2e394669c26e45cc80fa6f7b1db0811bcae71a25afb7f"
+    },
+    "skills/griddo-core/references/tipos-y-schemas.md": {
+      "source": "packages/griddo-core/llms-doc/tipos-y-schemas.md",
+      "sha256": "d97f14c7912419ab26fb4d875a8e676dad94d873b65188cb333b6ecc1b2e33a7",
+      "sourceSha256": "38428a9eb95f6a071991f436191ad43c99511ebcb9f36156aa88f3609cc7b1cf"
+    }
+  }
+}

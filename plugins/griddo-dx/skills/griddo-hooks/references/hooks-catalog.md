@@ -1,4 +1,4 @@
-# usScript
+# useScript
 
 Carga dinámicamente un script externo. Esto puede ser útil para integrar un script de terceros.
 
@@ -260,7 +260,7 @@ Devuelve un objeto con información de los filtros para usar con un dato estruct
 ```jsx
 import * as React from 'react'
 import { useList } from "@griddo/core"
-import { ContentTypePropsType } from "@autoTypes"
+import { ContentTypePropsType } from "@/autotypes"
 
 function Module(props) {
 	const { data } = props
@@ -308,26 +308,6 @@ function Module(props) {
 **Tipo:** number
 
 El id del idioma. El hook lo obtiene automáticamente del contexto de la página. Si se indica el valor 0 devolverá el resultado para todos los idiomas disponibles.
-
----
-
-# useFetch
-
-Obtiene datos dede un endpoint público.
-
----
-
-# useFormValues
-
-Obtiene fácilmente valores de un formulario `<form>`. Muy útil para usarlo junto a `useDataFilters` en los filtros de listados.
-
-## Uso básico
-
-```tsx
-const formRef = React.useRef(null)
-const [inputValues, updateInputValues] = useFormValues({ formRef })
-//     ^ estado     ^ función
-```
 
 ---
 
@@ -416,7 +396,7 @@ Obtiene un listado de un Content Type desde la API pública con posibilidad de r
 ## Uso básico
 
 ```tsx
-import { POSTContentTypeProps } from "@autoTypes";
+import { POSTContentTypeProps } from "@/autotypes";
 import { useListWithDefaultStaticPage } from "@griddo/core";
 import * as React from "react";
 
@@ -746,40 +726,3 @@ type ReturnType = {
     isServer: boolean;
 }
 ```
-
----
-
-# useUA (User Agent)
-
-Obtiene información del usuario que está visitando la página: navegador, sistema operativo, idioma, dispositivo, etc.
-
-## Uso básico
-
-```tsx
-import { **useUA** } from "@griddo/core";
-
-function Module() {
-	const	{ device }  = useUA()
-	
-  return <div>{JSON.stringify(device)}</div>
-}
-```
-
-## Parámetros / Métodos
-
-| Nombre | Tipo | Descripción |
-|---|---|---|
-| browser | object | Objeto con el nombre, la versión y el idioma del navegador: { name: string, version: string, languag... |
-| country | string | Cadena que con formato ISOxxx con el idioma: en_US , etc.. |
-| cpu | object | Objeto con la información de la CPU: { architecture: string } |
-| device | object | Objeto con la información del dispositivo{ model: string, type: string, vendor: string} |
-| engine | object | Objeto con el nombre y la versión del engine: { name: string, version: string } |
-| os | object | Objeto con el nombre y la versión del sistema operativo: { name: string, version: string } |
-| ua | string | Cadena que representa el useragent , por ejemplo: Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_1_1 like M... |
-| userIP | string | IP pública del usuario |
-
-### ua
-
-**Tipo:** string
-
-Cadena que representa el useragent , por ejemplo: Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_1_1 like Mac OS X; en) AppleWebKit/534.46.0 (KHTML, like Gecko) CriOS/19.0.1084.60 Mobile/9B206 Safari/7534.48.3`

@@ -37,8 +37,6 @@ Cuando un developer:
 | **useLocaleDate** | i18n | Formatea fechas por idioma | Mostrar fechas localizadas |
 | **useSession** | Sesión | Estado global y sesión usuario | Datos de usuario, preferencias |
 | **useContentType** | Datos | Array de items de un ContentType | Cargar estructura de datos |
-| **useFetch** | API | Fetch genérico a endpoints | APIs públicas externas |
-| **useFormValues** | Formularios | Captura valores de formularios | Procesamiento de formularios |
 | **useReferenceField** | Datos | Datos de ReferenceField | Resolver referencias de datos |
 | **usePageRelatedContent** | IA | Contenido relacionado con IA | Artículos/productos similares |
 | **useSSR** | Meta | Detecta si es SSR o cliente | Renderización condicional |
@@ -269,53 +267,6 @@ const UserProfile = () => {
       </button>
     </div>
   );
-};
-```
-
-### Formularios
-
-#### useFormValues
-Captura valores de formularios.
-
-```typescript
-import { useFormValues } from '@griddo/core';
-
-const ContactForm = () => {
-  const formRef = useRef();
-  const values = useFormValues(formRef);
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Enviando:', values);
-  };
-  
-  return (
-    <form ref={formRef} onSubmit={handleSubmit}>
-      <input name="email" type="email" required />
-      <input name="message" type="text" required />
-      <button type="submit">Enviar</button>
-    </form>
-  );
-};
-```
-
-### APIs Externas
-
-#### useFetch
-Fetch genérico para endpoints públicos.
-
-```typescript
-import { useFetch } from '@griddo/core';
-
-const ExternalData = () => {
-  const { data, isLoading, error } = useFetch(
-    'https://api.ejemplo.com/data'
-  );
-  
-  if (isLoading) return <p>Cargando...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  
-  return <pre>{JSON.stringify(data, null, 2)}</pre>;
 };
 ```
 

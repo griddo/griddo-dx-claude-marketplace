@@ -5,7 +5,7 @@ Cuando necesitamos obtener content-types en el cliente (navegador) utilizaremos 
 Los detalles del funcionamiento del hook lo podéis ver en la documentación: useList pero a modo de ejemplo el uso básico sería el siguiente código simplificado que iremos desglosando poco a poco.
 
 ```tsx
-import type { ModuleProps, DATAContentTypeListProps } from "@autoTypes";
+import type { ModuleProps, DATAContentTypeListProps } from "@/autotypes";
 import { useList } from "@griddo/core";
 import * as React from "react";
 
@@ -32,7 +32,7 @@ const Module = (props: ModuleProps) => {
 Como vemos, al hook le podemos pasar el type del dato que ya ha generado AutoTypes™️ por nosotros para que así tengamos la respuesta completamente tipada. El type para usar con los listados tiene la partícula `List` en el nombre del type. Es decir si tenemos un dato `DATA`, tendremos un type par los listados: `DATAContentTypeListProps` 
 
 ```tsx
-import type { ModuleProps, DATAContentTypeListProps } from "@autoTypes";
+import type { ModuleProps, DATAContentTypeListProps } from "@/autotypes";
 ...
 
 const Module = (props: ModuleProps) => {
@@ -46,7 +46,7 @@ A su vez el type acepta un genérico que indica con qué nivel de relaciones vam
 De esta manera podremos acceder por ejemplo añadiendo `<"simple">` al `id` o `label` de unas categorías que estén en el dato DATA, sino solo obtendríamos su `id`
 
 ```tsx
-import type { ModuleProps, DATAContentTypeListProps } from "@autoTypes";
+import type { ModuleProps, DATAContentTypeListProps } from "@/autotypes";
 ...
 
 const Module = (props: ModuleProps) => {
