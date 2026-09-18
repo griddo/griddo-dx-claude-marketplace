@@ -1,3 +1,5 @@
+![Griddo DX Marketplace](.github/assets/griddo-dx-marketplace.png)
+
 # Griddo DX Plugin
 
 Plugin especializado en desarrollo de instancias Griddo — scaffolding de módulos, templates, content types, referencia completa de fields, hooks, API y schemas.
