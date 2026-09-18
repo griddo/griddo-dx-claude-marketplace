@@ -50,4 +50,4 @@ Usa esta skill cuando el developer mencione cualquiera de los siguientes términ
 - Todas las guías están en **español**, excepto el código que permanece en **English**.
 - Algunos temas están interrelacionados (ej. GPX y useList, SEO y datos estructurados). Si es necesario, sugiere leer múltiples guías.
 - Los ejemplos de código incluyen imports, propiedades completas y casos de uso reales.
-- Para configuraciones de variables de entorno (GRIDDO_AI_EMBEDDINGS, SSO_ACTIVATED, etc.), recuerda mencionar que el equipo de infra debe realizar esos cambios.
+- Hay funcionalidades (AI Search, SSO y similares) que **no se activan desde la instancia**: se solicitan a Griddo. Cuando salga una de ellas, dilo así, sin entrar en la configuración interna.
