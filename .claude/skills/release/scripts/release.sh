@@ -9,6 +9,7 @@ set -euo pipefail
 # tracking each plugin's `name` and `path` independently.
 
 MARKETPLACE_JSON=".claude-plugin/marketplace.json"
+BUNDLE_DIR="standalone"
 DRY_RUN=false
 BUMP_TYPE=""         # Effective global bump type (override or auto-detected from all commits)
 BUMP_TYPE_ARG=""     # User-provided override from CLI (empty when auto-detecting)
@@ -41,8 +42,9 @@ show_help() {
   cat <<'HELP'
 Usage: release.sh [OPTIONS] [major|minor|patch]
 
-Detect changed plugins and marketplace changes, bump versions,
-and output structured JSON for the /release skill.
+Detect changed plugins and marketplace changes, bump versions, repackage each
+bumped plugin into standalone/NAME.plugin, and output structured JSON for the
+/release skill.
 
 Options:
   --help               Show this help message
@@ -315,6 +317,49 @@ bump_marketplace() {
   fi
 }
 
+# Repackage every bumped plugin into standalone/NAME.plugin so the distributable
+# archive always carries the version that was just released.
+bundle_plugins() {
+  BUNDLES_JSON="[]"
+
+  if [[ -z "$CHANGED_PLUGINS" ]]; then
+    return
+  fi
+
+  local bundler="$SCRIPT_DIR/bundle-plugin.sh"
+  if [[ ! -x "$bundler" ]]; then
+    emit_error "Bundler not found or not executable at $bundler. The release would ship without an updated .plugin archive."
+  fi
+
+  log "Building distributable bundles..."
+
+  while IFS=$'\t' read -r name path; do
+    [[ -z "$name" ]] && continue
+
+    local bundle_path="$BUNDLE_DIR/$name.plugin"
+
+    if [[ "$DRY_RUN" == "false" ]]; then
+      local result=""
+      result=$("$bundler" --json --name "$name" --out-dir "$BUNDLE_DIR" "$path") \
+        || emit_error "Failed to build the distributable bundle for $name ($path)."
+      bundle_path=$(echo "$result" | jq -r '.bundle')
+      log "  $name → $bundle_path ($(echo "$result" | jq -r '.file_count') files, $(echo "$result" | jq -r '.size_bytes') bytes)"
+    else
+      log "  $name → $bundle_path (dry run, not built)"
+    fi
+
+    BUNDLES_JSON=$(echo "$BUNDLES_JSON" | jq \
+      --arg name "$name" \
+      --arg bundle "$bundle_path" \
+      '. + [{"name": $name, "bundle": $bundle}]')
+
+  done <<< "$CHANGED_PLUGINS"
+
+  # Attach each bundle path to its plugin entry in the output.
+  PLUGINS_JSON=$(jq -n --argjson plugins "$PLUGINS_JSON" --argjson bundles "$BUNDLES_JSON" \
+    '$plugins | map(. as $p | $p + {bundle: (($bundles[] | select(.name == $p.name) | .bundle) // null)})')
+}
+
 verify_sync() {
   if [[ "$DRY_RUN" == "true" || -z "$CHANGED_PLUGINS" ]]; then
     return
@@ -381,6 +426,12 @@ build_files_modified() {
     done <<< "$CHANGED_PLUGINS"
   fi
 
+  # Add the regenerated distributable bundles
+  while read -r bundle; do
+    [[ -z "$bundle" ]] && continue
+    FILES_MODIFIED_JSON=$(echo "$FILES_MODIFIED_JSON" | jq --arg f "$bundle" '. + [$f]')
+  done < <(echo "$PLUGINS_JSON" | jq -r '.[].bundle // empty')
+
   # Add marketplace.json (always modified if any version changed)
   FILES_MODIFIED_JSON=$(echo "$FILES_MODIFIED_JSON" | jq --arg f "$MARKETPLACE_JSON" '. + [$f]')
 }
@@ -442,6 +493,7 @@ main() {
   bump_plugins
   bump_marketplace
   verify_sync
+  bundle_plugins
 
   build_commit_message
   build_files_modified

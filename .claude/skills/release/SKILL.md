@@ -1,18 +1,25 @@
 ---
 name: release
-description: Bump plugin and marketplace versions, update README, sync marketplace.json, commit, push, and create PR
+description: Bump plugin and marketplace versions, rebuild the distributable .plugin bundles, update README, sync marketplace.json, commit, push, and create PR
 ---
 
 # Release - Version Bump and PR Creation
 
-Detects changed plugins and marketplace-level changes since the last release, bumps their versions independently, updates README.md, syncs marketplace.json, commits, pushes, and creates a PR.
+Detects changed plugins and marketplace-level changes since the last release, bumps their versions independently, repackages each bumped plugin into `standalone/NAME.plugin`, updates README.md, syncs marketplace.json, commits, pushes, and creates a PR.
 
 Supports both flat (`PLUGIN_NAME/`) and nested (`plugins/PLUGIN_NAME/`) plugin layouts. The plugin's directory is read from `source` in `marketplace.json`; the `name` field is used only for identifying the plugin in marketplace.json and in commit messages.
 
 ## Available scripts
 
-- **`scripts/release.sh`** — Validates branch, detects changes, bumps versions in JSON files, outputs structured JSON. Run with `--help` for details.
+- **`scripts/release.sh`** — Validates branch, detects changes, bumps versions in JSON files, rebuilds the distributable bundles, outputs structured JSON. Run with `--help` for details.
 - **`scripts/scan-secrets.sh`** — Scans tracked files for likely exposed credentials. Invoked by `release.sh` as a pre-release gate; can also be run standalone. Run with `--help` for details.
+- **`scripts/bundle-plugin.sh`** — Packages a plugin directory into `standalone/NAME.plugin`, the single-file archive partners install without going through the marketplace. Invoked by `release.sh` for every bumped plugin; can also be run on its own to rebuild a bundle. Run with `--help` for details.
+
+## Distributable bundles
+
+`standalone/NAME.plugin` is a zip whose root is the plugin's own contents (`.claude-plugin/plugin.json`, `skills/`, `agents/`, `README.md`). It is committed, not ignored, because partners install from it directly.
+
+Only git-tracked files are packaged, so a bundle always mirrors the committed plugin and never carries local junk. `release.sh` rebuilds it after the version bump, so the `plugin.json` inside the archive always reports the version being released.
 
 ## Usage
 
@@ -39,7 +46,9 @@ Parse the JSON output. Handle by `status` field:
 - `"no_changes"`: Print the `message` and STOP.
 - `"ok"`: Save all fields and continue.
 
-The JSON contains: `branch`, `bump_type`, `plugins` (array with `name`/`path`/`old_version`/`new_version`/`file`), `marketplace` (changed/old_version/new_version), `files_modified`, `commit_message`, `commits_since_baseline`.
+The JSON contains: `branch`, `bump_type`, `plugins` (array with `name`/`path`/`old_version`/`new_version`/`file`/`bundle`), `marketplace` (changed/old_version/new_version), `files_modified`, `commit_message`, `commits_since_baseline`.
+
+`files_modified` already includes each rebuilt `standalone/NAME.plugin`, so staging that array is enough to ship the bundles with the release.
 
 ### Step 2: Update README.md
 
@@ -138,15 +147,17 @@ Release complete!
   marketplace  OLD → NEW          TYPE
   PLUGIN       OLD → NEW          TYPE
 
+  Bundles: standalone/NAME.plugin (one per bumped plugin)
   Commit: HASH
   Branch: BRANCH
   PR: URL
 ```
 
-Only include rows for components that were actually bumped.
+Only include rows for components that were actually bumped. Omit the `Bundles` line when no plugin was bumped.
 
 ## Error Handling
 
 - If `scripts/release.sh` exits non-zero, its stdout contains error/no-changes JSON. Print the message and stop.
+- A bundling failure (missing `zip`, unreadable plugin directory) aborts the release before the commit, so partners never get a release whose `.plugin` archive lags the published version.
 - If `git push` fails, print the error and suggest resolving manually.
 - If `gh pr create` fails, print the error. The version bump commit is still valid.
