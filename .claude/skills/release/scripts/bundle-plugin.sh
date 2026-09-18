@@ -103,9 +103,25 @@ main() {
   # since been deleted from the plugin. Always start from scratch.
   rm -f "$bundle_abs"
 
-  # -X drops platform extra fields; git ls-files is sorted, so the entry order
-  # is stable across machines.
-  ( cd "$PLUGIN_PATH" && git ls-files -z | xargs -0 zip -q -X "$bundle_abs" ) \
+  # Stage the tracked files, then flatten their timestamps. A zip records each
+  # entry's mtime, so packaging the working tree directly would produce a
+  # different archive on every build and leave the committed bundle spuriously
+  # dirty — which in turn blocks the next release on its clean-tree check.
+  local staging filelist
+  staging=$(mktemp -d)
+  filelist=$(mktemp)
+  # Expanded now, not at exit: these are locals and would be out of scope by then.
+  trap "rm -rf '$staging' '$filelist'" EXIT
+
+  ( cd "$PLUGIN_PATH" && git ls-files ) > "$filelist"
+  tar -cf - -C "$PLUGIN_PATH" -T "$filelist" | tar -xf - -C "$staging" \
+    || fail "Failed to stage $PLUGIN_PATH for bundling."
+
+  # 1980-01-01 is the earliest timestamp the zip format can represent.
+  find "$staging" -exec touch -t 198001010000.00 {} +
+
+  # -X drops platform extra fields; the sorted list fixes the entry order.
+  ( cd "$staging" && find . -type f | sed 's|^\./||' | sort | zip -q -X -@ "$bundle_abs" ) \
     || fail "zip failed while building $bundle"
 
   local version size_bytes
