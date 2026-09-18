@@ -1,3 +1,5 @@
+![Griddo DX Marketplace](.github/assets/griddo-dx-marketplace.png)
+
 # Griddo Marketplace
 
 Official plugin marketplace for [Griddo](https://griddo.io) — the DXP built for higher-education websites.
