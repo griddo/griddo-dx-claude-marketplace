@@ -4,7 +4,7 @@
 
 Official plugin marketplace for [Griddo](https://griddo.io) — the DXP built for higher-education websites.
 
-> Marketplace v1.2.0
+> Marketplace v1.3.0
 
 This marketplace packages tools for developers building on Griddo — both Griddo staff and partner teams. The plugin is open source; issues and contributions are welcome.
 
@@ -37,7 +37,7 @@ Pull the latest marketplace metadata and reinstall to pick up new plugin version
 
 | Plugin | Description | Version |
 |--------|-------------|---------|
-| **griddo-dx** | Scaffolding de módulos, templates y content types, referencia de fields, hooks, schemas y la superficie pública de @griddo/core | 0.3.0 |
+| **griddo-dx** | Scaffolding de módulos, templates y content types, referencia de fields, hooks, schemas y la superficie pública de @griddo/core | 0.3.1 |
 
 ## Contributing
 
