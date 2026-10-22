@@ -2,6 +2,7 @@
 set -euo pipefail
 
 # bundle-plugin.sh — Package a plugin directory into a distributable .plugin archive.
+# Run by the release build hook (bundle-hook.sh) for every plugin a release bumps.
 #
 # A .plugin file is a zip whose root holds the plugin directory's contents
 # (.claude-plugin/plugin.json, skills/, agents/, README.md, ...), which is the
