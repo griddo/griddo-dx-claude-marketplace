@@ -49,10 +49,12 @@ export = {
 
 Lo que nos importa de aquí (y que tenemos que exportar) es:
 
-- `<LdJson data={content} />`. Es un componente que nos permite enviar un dato estructurado al header. Creamos el objeto que queremos enviar (puede ser un objeto o un array de objetos) y se lo pasamos a la función.
+- `<LdJson data={content} />`. Es un componente que escribe un dato estructurado en el HTML de la página, en un `<script type="application/ld+json">` en el sitio donde se pinta. Creamos el objeto que queremos enviar (puede ser un objeto o un array de objetos) y se lo pasamos a la función.
 - `<BasicLdJson />`. Es un componente que nos permite enviar un dato estructurado de uso común en todas o casi todas las templates (en este caso, ejemplo real de Centro Garrigues, son dos datos estructurados distintos en un array). Esto es un ejemplo de lo que se comentaba antes de que LdJson admite tanto un objeto individual como un array de objetos, porque aquí le estamos pasando un array. No hace nada que no haga ya LdJson, pero simplifica importaciones rutinarias. Incluso podemos crear varios genéricos para esquemas con datos que se repiten constantemente.
 
-Esto es flexible y se puede adaptar a las necesidades de cada cliente, puedes utilizar estas funciones u otras que se ajusten mejor a cada caso particular. Lo importante realmente es el componente LdJson que es la que nos permite enviar un dato estructurado de Google al header del documento.
+Esto es flexible y se puede adaptar a las necesidades de cada cliente, puedes utilizar estas funciones u otras que se ajusten mejor a cada caso particular. Lo importante realmente es el componente LdJson, que es el que escribe el dato estructurado de Google en el HTML de la página.
+
+Los textos se pasan tal cual: el JSON sale válido con cualquier texto, así que no hay que escapar a mano comillas ni saltos de línea. Si se escapan, las barras se ven en el dato estructurado.
 
 ## Integración
 
