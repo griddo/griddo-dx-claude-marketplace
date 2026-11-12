@@ -244,30 +244,13 @@ Agrupación de Check Fields.
 
 ```typescript
 {
-  "title": "Meta robots advanced",
+  "title": "Contenido incluido",
   "type": "CheckGroup",
-  "key": "metasAdvanced",
+  "key": "includes",
   "options": [
-    {
-      "value": "noimageindex",
-      "title": "No image index",
-      "name": "noimage"
-    },
-    {
-      "value": "nosnippet",
-      "title": "No snippet",
-      "name": "nosnippet"
-    },
-    {
-      "value": "noodp",
-      "title": "No ODP",
-      "name": "noodp"
-    },
-    {
-      "value": "noarchive",
-      "title": "No archive",
-      "name": "noarchive"
-    }
+    { "title": "Incluir vídeo", "name": "video" },
+    { "title": "Incluir audio", "name": "audio" },
+    { "title": "Incluir subtítulos", "name": "subtitles" }
   ]
 }
 ```
@@ -285,11 +268,15 @@ type CheckGroup<Values> = Array<Values>;
 | hideable | Boolean |  | Si el campo puede ser ocultado por los editores. Por defecto: false |
 | key | String | ✅ | Nombre interno del campo para API. Camelcase. |
 | mandatory | Boolean |  | Si el campo es obligatorio. Por defecto: false. |
-| options | Array | ✅ | Array de checks que se quieren mostrar |
+| options | Array | ✅ | Opciones `{ title, name, disabled? }`. Se guarda el `name` de las marcadas. |
 | title | String | ✅ | Label del campo que aparecerá en el formulario. |
 | type | String | ✅ | Tipo de campo. |
 
 ## Detalles
+
+Se guarda el `name` de cada opción marcada: con «Incluir vídeo» e «Incluir audio» marcadas, el valor del campo es `["video", "audio"]`.
+
+Las opciones no llevan `value`. El `RadioGroup` sí guarda el `value` de la opción elegida, pero el `CheckGroup` no lo lee. En un schema tipado con `@griddo/core`, un `value` en una opción es un error de `tsc` (TS2353).
 
 ## API response Type
 
